@@ -1,8 +1,13 @@
 plugins {
     application
     id("java")
+    id("jacoco")
+    id("checkstyle")
+    id("io.freefair.lombok") version "8.4"
     id("org.springframework.boot") version "3.2.2"
     id("io.spring.dependency-management") version "1.1.4"
+    id("com.github.ben-manes.versions") version "0.50.0"
+    id("com.github.johnrengelman.shadow") version "8.1.1"
 }
 
 group = "hexlet.code"
