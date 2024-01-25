@@ -1,4 +1,3 @@
-
 FROM eclipse-temurin:20-jdk
 
 ARG GRADLE_VERSION=8.4
@@ -17,12 +16,8 @@ ENV PATH=$PATH:$GRADLE_HOME/bin
 
 WORKDIR /app
 
-COPY gradle gradle
-COPY build.gradle.kts .
-COPY settings.gradle.kts .
-COPY gradlew .
+COPY ./ .
 
-RUN ./gradlew installDist
-
+RUN gradle installDist
 
 CMD build/install/app/bin/app
