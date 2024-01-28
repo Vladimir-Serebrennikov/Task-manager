@@ -52,8 +52,14 @@ public class UsersController {
     public UserDTO update(@Valid @RequestBody UserUpdateDTO userData, @PathVariable Long id) {
         var user = userRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("User with id " + id + " not found"));
-        userRepository.save(user);
+        userMapper.update(userData, user);
         return userMapper.map(user);
+    }
+
+    @DeleteMapping(path = "/{id}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void delete(@PathVariable Long id) {
+        userRepository.deleteById(id);
     }
 
 }
