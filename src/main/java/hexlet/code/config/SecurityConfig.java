@@ -20,7 +20,7 @@ import hexlet.code.service.CustomUserDetailsService;
 
 @Configuration
 @EnableWebSecurity
-public final class SecurityConfig {
+public class SecurityConfig {
     @Autowired
     private  JwtDecoder jwtDecoder;
 

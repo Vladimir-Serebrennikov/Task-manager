@@ -13,7 +13,7 @@ import hexlet.code.util.JWTUtils;
 
 @RestController
 @RequestMapping("/api")
-public final class AuthenticationController {
+public class AuthenticationController {
     @Autowired
     private JWTUtils jwtUtils;
 

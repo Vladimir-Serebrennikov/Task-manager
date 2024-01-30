@@ -33,7 +33,7 @@ import java.util.Collection;
 @ToString(onlyExplicitlyIncluded = true)
 @Getter
 @Setter
-public final class User implements BaseEntity, UserDetails {
+public class User implements BaseEntity, UserDetails {
     @Id
     @GeneratedValue(strategy = IDENTITY)
     @EqualsAndHashCode.Include

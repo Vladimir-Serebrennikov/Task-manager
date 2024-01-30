@@ -11,7 +11,7 @@ import hexlet.code.model.User;
 import hexlet.code.repository.UserRepository;
 
 @Service
-public final class CustomUserDetailsService  implements UserDetailsManager {
+public class CustomUserDetailsService  implements UserDetailsManager {
     @Autowired
     private UserRepository userRepository;
 
