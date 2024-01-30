@@ -10,12 +10,13 @@ import org.springframework.stereotype.Service;
 import hexlet.code.model.User;
 import hexlet.code.repository.UserRepository;
 
-import java.io.StringReader;
-
 @Service
-public class CustomUserDetailsService  implements UserDetailsManager {
+public final class CustomUserDetailsService  implements UserDetailsManager {
     @Autowired
     private UserRepository userRepository;
+
+    @Autowired
+    private PasswordEncoder passwordEncoder;
 
     @Override
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
@@ -26,8 +27,11 @@ public class CustomUserDetailsService  implements UserDetailsManager {
 
     @Override
     public void createUser(UserDetails userData) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'createUser'");
+        var user = new User();
+        user.setEmail(userData.getUsername());
+        var encoderPassword = passwordEncoder.encode(userData.getPassword());
+        user.setPasswordDigest(encoderPassword);
+        userRepository.save(user);
     }
 
     @Override
