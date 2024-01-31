@@ -5,7 +5,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 @Configuration
-public final class Config {
+public class Config {
     @Bean
     public Faker faker() {
         return new Faker();

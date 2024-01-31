@@ -62,6 +62,7 @@ public class UsersController {
         var user = userRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("User with id " + id + " not found"));
         userMapper.update(userData, user);
+        userRepository.save(user);
         return userMapper.map(user);
     }
 
