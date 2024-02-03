@@ -95,7 +95,7 @@ public class UserControllerTest {
         data.put("passwordDigest", "12345123");
 
         var request = put("/api/users/" + testUser.getId())
-                .with(jwt().jwt(builder -> builder.subject(testUser.getEmail())))  // Authenticate as the testUser
+                .with(jwt().jwt(builder -> builder.subject(testUser.getEmail())))
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(om.writeValueAsString(data));
 
