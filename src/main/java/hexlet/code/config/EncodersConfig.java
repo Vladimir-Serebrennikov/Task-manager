@@ -21,7 +21,6 @@ import com.nimbusds.jose.proc.SecurityContext;
 @Configuration
 public class EncodersConfig {
     @Autowired
-    // Создается ниже
     private RsaKeyProperties rsaKeys;
     @Bean
     public PasswordEncoder passwordEncoder() {

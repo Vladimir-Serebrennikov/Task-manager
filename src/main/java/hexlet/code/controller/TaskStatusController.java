@@ -4,8 +4,6 @@ import hexlet.code.dto.TaskStatusCreateDTO;
 import hexlet.code.dto.TaskStatusDTO;
 import hexlet.code.dto.TaskStatusUpdateDTO;
 import hexlet.code.exception.ResourceNotFoundException;
-import hexlet.code.mapper.UserMapper;
-import hexlet.code.repository.UserRepository;
 import hexlet.code.service.TaskStatusService;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
