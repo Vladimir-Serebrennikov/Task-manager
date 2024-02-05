@@ -1,5 +1,6 @@
 package hexlet.code.util;
 
+import hexlet.code.model.Label;
 import hexlet.code.model.Task;
 import hexlet.code.model.TaskStatus;
 import jakarta.persistence.criteria.CriteriaBuilder;
@@ -22,6 +23,8 @@ public class ModelGenerator {
     private Model<TaskStatus> taskStatusModel;
 
     private Model<Task> taskModel;
+
+    private Model<Label> labelModel;
 
     @Autowired
     private Faker faker;
@@ -52,6 +55,12 @@ public class ModelGenerator {
                 .ignore(Select.field(Task::getIndex))
                 .supply(Select.field(Task::getName), () -> faker.lorem().word())
                 .supply(Select.field(Task::getDescription), () -> faker.lorem().word())
+                .toModel();
+
+        labelModel = Instancio.of(Label.class)
+                .ignore(Select.field(Label::getId))
+                .ignore(Select.field(Label::getCreatedAt))
+                .supply(Select.field(Label::getName), () -> faker.lorem().word())
                 .toModel();
     }
 }
