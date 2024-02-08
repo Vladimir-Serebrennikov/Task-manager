@@ -5,10 +5,10 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import hexlet.code.mapper.TaskStatusMapper;
+import hexlet.code.repository.*;
 import org.springframework.http.MediaType;
 
 import hexlet.code.model.TaskStatus;
-import hexlet.code.repository.TaskStatusRepository;
 import hexlet.code.util.ModelGenerator;
 
 import org.instancio.Instancio;
@@ -47,6 +47,9 @@ public final class TaskStatusControllerTest {
     @Autowired
     private TaskStatusRepository taskStatusRepository;
 
+    @Autowired
+    private TaskRepository taskRepository;
+
 
     private SecurityMockMvcRequestPostProcessors.JwtRequestPostProcessor token;
 
@@ -54,6 +57,7 @@ public final class TaskStatusControllerTest {
 
     @BeforeEach
     public void setUp() {
+        taskRepository.deleteAll();
         taskStatusRepository.deleteAll();
         token = jwt().jwt(builder -> builder.subject("hexlet@example.com"));
         testTaskStatus = Instancio.of(modelGenerator.getTaskStatusModel())
