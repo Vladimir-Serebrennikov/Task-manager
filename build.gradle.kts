@@ -8,6 +8,7 @@ plugins {
     id("io.spring.dependency-management") version "1.1.4"
     id("com.github.ben-manes.versions") version "0.50.0"
     id("com.github.johnrengelman.shadow") version "8.1.1"
+    id("io.sentry.jvm.gradle") version "4.2.0"
 }
 
 group = "hexlet.code"
@@ -44,4 +45,13 @@ dependencies {
 
 tasks.test {
     useJUnitPlatform()
+}
+
+if (System.getenv("APP_ENV") == "production") {
+    sentry {
+        includeSourceContext = true
+        org = "vladimir-serebrennikov"
+        projectName = "java-spring-boot"
+        authToken = System.getenv("SENTRY_AUTH_TOKEN")
+    }
 }
