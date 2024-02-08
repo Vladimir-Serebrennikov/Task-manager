@@ -8,7 +8,7 @@ import hexlet.code.model.User;
 import hexlet.code.repository.UserRepository;
 
 @Component
-public class UserUtils {
+public final class UserUtils {
     @Autowired
     private UserRepository userRepository;
 

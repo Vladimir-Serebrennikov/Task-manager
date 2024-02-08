@@ -17,7 +17,7 @@ import java.util.List;
 
 @Component
 @AllArgsConstructor
-public class DataInitializer implements ApplicationRunner {
+public final class DataInitializer implements ApplicationRunner {
     @Autowired
     private UserRepository userRepository;
 

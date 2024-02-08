@@ -25,7 +25,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/users")
-public class UsersController {
+public final class UsersController {
     @Autowired
     private UserRepository userRepository;
     @Autowired
