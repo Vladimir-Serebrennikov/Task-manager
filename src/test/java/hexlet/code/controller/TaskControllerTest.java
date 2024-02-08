@@ -37,7 +37,7 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 @SpringBootTest
 @AutoConfigureMockMvc
-public class TaskControllerTest {
+public final class TaskControllerTest {
     @Autowired
     private MockMvc mockMvc;
 
@@ -66,43 +66,43 @@ public class TaskControllerTest {
 
     private Label testLabel;
 
-        @BeforeEach
-        public void setUp() {
-            token = jwt().jwt(builder -> builder.subject("hexlet@example.com"));
-            testTask = Instancio.of(modelGenerator.getTaskModel())
-                    .create();
-            testTaskStatus = Instancio.of(modelGenerator.getTaskStatusModel())
-                    .create();
-            testLabel = Instancio.of(modelGenerator.getLabelModel())
-                            .create();
-            labelRepository.save(testLabel);
-            taskStatusRepository.save(testTaskStatus);
-            testTask.setTaskStatus(testTaskStatus);
-            testTask.setLabels(List.of(testLabel));
-        }
-        @Test
-        public void testTaskIndex() throws Exception {
-            taskRepository.save(testTask);
-            var result = mockMvc.perform(get("/api/tasks").with(token))
-                    .andExpect(status().isOk())
-                    .andReturn();
-            var body = result.getResponse().getContentAsString();
-            assertThatJson(body).isArray();
-        }
+    @BeforeEach
+    public void setUp() {
+        token = jwt().jwt(builder -> builder.subject("hexlet@example.com"));
+        testTask = Instancio.of(modelGenerator.getTaskModel())
+                .create();
+        testTaskStatus = Instancio.of(modelGenerator.getTaskStatusModel())
+                .create();
+        testLabel = Instancio.of(modelGenerator.getLabelModel())
+                .create();
+        labelRepository.save(testLabel);
+        taskStatusRepository.save(testTaskStatus);
+        testTask.setTaskStatus(testTaskStatus);
+        testTask.setLabels(List.of(testLabel));
+    }
+    @Test
+    public void testTaskIndex() throws Exception {
+        taskRepository.save(testTask);
+        var result = mockMvc.perform(get("/api/tasks").with(token))
+                .andExpect(status().isOk())
+                .andReturn();
+        var body = result.getResponse().getContentAsString();
+        assertThatJson(body).isArray();
+    }
     @Test
     public void testTaskIndexWithParams() throws Exception {
-            taskRepository.save(testTask);
-            var request = get("/api/tasks?" +
-                    "titleCont=" + "testTitle" +
-                    "&assigneeId=" + 1 +
-                    "&status=" + "testStatus" +
-                    "&labelId=" + 1)
-                    .with(token);
-            var result = mockMvc.perform(request)
-                    .andExpect(status().isOk())
-                    .andReturn();
-            var body = result.getResponse().getContentAsString();
-            assertThatJson(body).isArray().hasSize(0);
+        taskRepository.save(testTask);
+        var request = get("/api/tasks?"
+                + "titleCont=" + "testTitle"
+                + "&assigneeId=" + 1
+                + "&status=" + "testStatus"
+                + "&labelId=" + 1)
+                .with(token);
+        var result = mockMvc.perform(request)
+                .andExpect(status().isOk())
+                .andReturn();
+        var body = result.getResponse().getContentAsString();
+        assertThatJson(body).isArray().hasSize(0);
     }
 
 
@@ -122,7 +122,7 @@ public class TaskControllerTest {
     }
 
     @Test
-    public void testTaskUpdate() throws Exception{
+    public void testTaskUpdate() throws Exception {
         taskRepository.save(testTask);
 
         var data = new TaskUpdateDTO();

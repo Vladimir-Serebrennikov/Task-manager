@@ -1,6 +1,12 @@
 package hexlet.code.mapper;
 
-import org.mapstruct.*;
+import org.mapstruct.Mapper;
+import org.mapstruct.MappingTarget;
+import org.mapstruct.NullValuePropertyMappingStrategy;
+import org.mapstruct.MappingConstants;
+import org.mapstruct.ReportingPolicy;
+import org.mapstruct.Mapping;
+import org.mapstruct.BeforeMapping;
 
 import hexlet.code.model.User;
 import hexlet.code.dto.UserDTO;

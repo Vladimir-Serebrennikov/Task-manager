@@ -3,7 +3,6 @@ package hexlet.code.util;
 import hexlet.code.model.Label;
 import hexlet.code.model.Task;
 import hexlet.code.model.TaskStatus;
-import jakarta.persistence.criteria.CriteriaBuilder;
 import org.instancio.Instancio;
 import org.instancio.Model;
 import org.instancio.Select;
