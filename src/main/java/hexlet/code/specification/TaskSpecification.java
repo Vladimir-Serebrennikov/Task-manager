@@ -7,7 +7,7 @@ import hexlet.code.model.Task;
 import hexlet.code.dto.TaskParamsDTO;
 
 @Component
-public class TaskSpecification {
+public final class TaskSpecification {
 
     public Specification<Task> build(TaskParamsDTO params) {
         return withAssigneeId(params.getAssigneeId())

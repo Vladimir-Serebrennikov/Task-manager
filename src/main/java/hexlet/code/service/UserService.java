@@ -12,7 +12,7 @@ import java.util.List;
 
 
 @Service
-public class UserService {
+public final class UserService {
     @Autowired
     private UserRepository userRepository;
 

@@ -11,7 +11,7 @@ import hexlet.code.repository.TaskStatusRepository;
 import java.util.List;
 
 @Service
-public class TaskStatusService {
+public final class TaskStatusService {
     @Autowired
     private TaskStatusRepository taskStatusRepository;
 

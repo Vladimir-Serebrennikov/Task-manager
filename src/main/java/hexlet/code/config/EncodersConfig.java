@@ -19,7 +19,7 @@ import com.nimbusds.jose.jwk.source.JWKSource;
 import com.nimbusds.jose.proc.SecurityContext;
 
 @Configuration
-public class EncodersConfig {
+public final class EncodersConfig {
     @Autowired
     private RsaKeyProperties rsaKeys;
     @Bean
