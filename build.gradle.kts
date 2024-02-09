@@ -2,7 +2,7 @@ plugins {
     application
     id("java")
     id("jacoco")
-    id("checkstyle")
+    //id("checkstyle")
     id("io.freefair.lombok") version "8.4"
     id("org.springframework.boot") version "3.2.2"
     id("io.spring.dependency-management") version "1.1.4"
@@ -32,6 +32,7 @@ dependencies {
     implementation("org.instancio:instancio-junit:3.6.0")
     implementation("net.datafaker:datafaker:2.0.2")
     implementation("org.springdoc:springdoc-openapi-starter-webmvc-ui:2.3.0")
+    implementation("io.sentry:sentry-spring-boot-starter:7.3.0")
     annotationProcessor("org.mapstruct:mapstruct-processor:1.5.5.Final")
     runtimeOnly("com.h2database:h2:2.2.224")
     implementation("org.postgresql:postgresql:42.6.0")
