@@ -54,11 +54,13 @@ tasks.jacocoTestReport {
     }
 }
 
-if (System.getenv("APP_ENV") == "production") {
-    sentry {
-        includeSourceContext = true
-        org = "vladimir-serebrennikov"
-        projectName = "java-spring-boot"
-        authToken = System.getenv("SENTRY_AUTH_TOKEN")
-    }
+sentry {
+    includeSourceContext = true
+    org = "vladimir-serebrennikov"
+    projectName = "java-spring-boot"
+    authToken = System.getenv("SENTRY_AUTH_TOKEN")
+}
+
+tasks.sentryBundleSourcesJava {
+    enabled = System.getenv("SENTRY_AUTH_TOKEN") != null
 }
