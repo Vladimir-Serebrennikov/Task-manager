@@ -11,7 +11,7 @@ import hexlet.code.service.TaskService;
 import hexlet.code.specification.TaskSpecification;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
+import org.springframework.http.*;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -40,10 +40,11 @@ public final class TaskController {
     private TaskSpecification specBuilder;
 
     @GetMapping(path = "")
-    @ResponseStatus(HttpStatus.OK)
-    public List<TaskDTO> index(TaskParamsDTO params, @RequestParam(defaultValue = "1") int page) {
+    public ResponseEntity<List<TaskDTO>> index(TaskParamsDTO params, @RequestParam(defaultValue = "1") int page) {
         var result = taskService.getAllWithParams(params);
-        return result;
+        return ResponseEntity.ok()
+                .header("X-Total-Count", String.valueOf(result.size()))
+                .body(result);
     }
 
 
