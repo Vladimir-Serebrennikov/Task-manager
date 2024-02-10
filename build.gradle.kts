@@ -46,6 +46,16 @@ dependencies {
 
 tasks.test {
     useJUnitPlatform()
+    testLogging {
+        finalizedBy(tasks.jacocoTestReport)
+    }
+}
+
+tasks.jacocoTestReport {
+    dependsOn(tasks.test)
+    reports {
+        xml.required = true
+    }
 }
 
 if (System.getenv("APP_ENV") == "production") {
