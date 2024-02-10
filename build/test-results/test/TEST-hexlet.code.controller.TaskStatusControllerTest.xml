@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="hexlet.code.controller.TaskStatusControllerTest" tests="3" skipped="0" failures="0" errors="0" timestamp="2024-02-08T18:34:30" hostname="SerebVl" time="0.049">
+  <properties/>
+  <testcase name="testTaskStatusUpdate()" classname="hexlet.code.controller.TaskStatusControllerTest" time="0.028"/>
+  <testcase name="testTaskStatusIndex()" classname="hexlet.code.controller.TaskStatusControllerTest" time="0.009"/>
+  <testcase name="testTaskStatusesCreate()" classname="hexlet.code.controller.TaskStatusControllerTest" time="0.011"/>
+  <system-out><![CDATA[?[2m2024-02-08T21:34:30.384+03:00?[0;39m ?[32m INFO?[0;39m ?[35m42748?[0;39m ?[2m---?[0;39m ?[2m[    Test worker]?[0;39m ?[2m?[0;39m?[36mt.c.s.AnnotationConfigContextLoaderUtils?[0;39m ?[2m:?[0;39m Could not detect default configuration classes for test class [hexlet.code.controller.TaskStatusControllerTest]: TaskStatusControllerTest does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
+?[2m2024-02-08T21:34:30.385+03:00?[0;39m ?[32m INFO?[0;39m ?[35m42748?[0;39m ?[2m---?[0;39m ?[2m[    Test worker]?[0;39m ?[2m?[0;39m?[36m.b.t.c.SpringBootTestContextBootstrapper?[0;39m ?[2m:?[0;39m Found @SpringBootConfiguration hexlet.code.AppApplication for test class hexlet.code.controller.TaskStatusControllerTest
+Hibernate: select t1_0.id,t1_0.assignee_id,t1_0.created_at,t1_0.description,t1_0.index,t1_0.name,t1_0.task_status_id from tasks t1_0
+Hibernate: select ts1_0.id,ts1_0.created_at,ts1_0.name,ts1_0.slug from task_statuses ts1_0 where ts1_0.id=?
+Hibernate: select ts1_0.id,ts1_0.created_at,ts1_0.name,ts1_0.slug from task_statuses ts1_0 where ts1_0.id=?
+Hibernate: select ts1_0.id,ts1_0.created_at,ts1_0.name,ts1_0.slug from task_statuses ts1_0 where ts1_0.id=?
+Hibernate: select ts1_0.id,ts1_0.created_at,ts1_0.name,ts1_0.slug from task_statuses ts1_0 where ts1_0.id=?
+Hibernate: delete from tasks_labels where task_id=?
+Hibernate: delete from tasks_labels where task_id=?
+Hibernate: delete from tasks_labels where task_id=?
+Hibernate: delete from tasks_labels where task_id=?
+Hibernate: delete from tasks where id=?
+Hibernate: delete from tasks where id=?
+Hibernate: delete from tasks where id=?
+Hibernate: delete from tasks where id=?
+Hibernate: select ts1_0.id,ts1_0.created_at,ts1_0.name,ts1_0.slug from task_statuses ts1_0
+Hibernate: delete from task_statuses where id=?
+Hibernate: delete from task_statuses where id=?
+Hibernate: delete from task_statuses where id=?
+Hibernate: delete from task_statuses where id=?
+Hibernate: delete from task_statuses where id=?
+Hibernate: delete from task_statuses where id=?
+Hibernate: delete from task_statuses where id=?
+Hibernate: delete from task_statuses where id=?
+Hibernate: delete from task_statuses where id=?
+Hibernate: insert into task_statuses (created_at,name,slug,id) values (?,?,?,default)
+Hibernate: select ts1_0.id,ts1_0.created_at,ts1_0.name,ts1_0.slug from task_statuses ts1_0 where ts1_0.id=?
+Hibernate: update task_statuses set created_at=?,name=?,slug=? where id=?
+Hibernate: select ts1_0.id,ts1_0.created_at,ts1_0.name,ts1_0.slug from task_statuses ts1_0 where ts1_0.id=?
+Hibernate: select t1_0.id,t1_0.assignee_id,t1_0.created_at,t1_0.description,t1_0.index,t1_0.name,t1_0.task_status_id from tasks t1_0
+Hibernate: select ts1_0.id,ts1_0.created_at,ts1_0.name,ts1_0.slug from task_statuses ts1_0
+Hibernate: delete from task_statuses where id=?
+Hibernate: insert into task_statuses (created_at,name,slug,id) values (?,?,?,default)
+Hibernate: select ts1_0.id,ts1_0.created_at,ts1_0.name,ts1_0.slug from task_statuses ts1_0
+Hibernate: select t1_0.id,t1_0.assignee_id,t1_0.created_at,t1_0.description,t1_0.index,t1_0.name,t1_0.task_status_id from tasks t1_0
+Hibernate: select ts1_0.id,ts1_0.created_at,ts1_0.name,ts1_0.slug from task_statuses ts1_0
+Hibernate: delete from task_statuses where id=?
+Hibernate: insert into task_statuses (created_at,name,slug,id) values (?,?,?,default)
+Hibernate: select ts1_0.id,ts1_0.created_at,ts1_0.name,ts1_0.slug from task_statuses ts1_0 where ts1_0.slug=?
+]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

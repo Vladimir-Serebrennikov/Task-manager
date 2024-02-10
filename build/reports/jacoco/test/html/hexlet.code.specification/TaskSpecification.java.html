@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="ru"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>TaskSpecification.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">app</a> &gt; <a href="index.source.html" class="el_package">hexlet.code.specification</a> &gt; <span class="el_source">TaskSpecification.java</span></div><h1>TaskSpecification.java</h1><pre class="source lang-java linenums">package hexlet.code.specification;
+
+import org.springframework.data.jpa.domain.Specification;
+import org.springframework.stereotype.Component;
+
+import hexlet.code.model.Task;
+import hexlet.code.dto.TaskParamsDTO;
+
+@Component
+<span class="fc" id="L10">public final class TaskSpecification {</span>
+
+    public Specification&lt;Task&gt; build(TaskParamsDTO params) {
+<span class="fc" id="L13">        return withAssigneeId(params.getAssigneeId())</span>
+<span class="fc" id="L14">                .and(withTitleCount(params.getTitleCont()))</span>
+<span class="fc" id="L15">                .and(withStatus(params.getStatus()))</span>
+<span class="fc" id="L16">                .and(withLabelId(params.getLabelId()));</span>
+    }
+
+    private Specification&lt;Task&gt; withAssigneeId(Long assigneeId) {
+<span class="fc bfc" id="L20" title="All 2 branches covered.">        return (root, query, cb) -&gt; assigneeId == null ? cb.conjunction()</span>
+<span class="fc" id="L21">                : cb.equal(root.get(&quot;assignee&quot;).get(&quot;id&quot;), assigneeId);</span>
+    }
+
+    private Specification&lt;Task&gt; withTitleCount(String titleCount) {
+<span class="fc bfc" id="L25" title="All 2 branches covered.">        return (root, query, cb) -&gt; titleCount == null ? cb.conjunction()</span>
+<span class="fc" id="L26">                : cb.like(cb.lower(root.get(&quot;name&quot;)), &quot;%&quot; + titleCount.toLowerCase() + &quot;%&quot;);</span>
+
+    }
+
+    private Specification&lt;Task&gt; withStatus(String status) {
+<span class="fc bfc" id="L31" title="All 2 branches covered.">        return (root, query, cb) -&gt; status == null ? cb.conjunction()</span>
+<span class="fc" id="L32">                : cb.equal(root.get(&quot;taskStatus&quot;).get(&quot;slug&quot;), status);</span>
+    }
+
+    private Specification&lt;Task&gt; withLabelId(Long labelId) {
+<span class="fc bfc" id="L36" title="All 2 branches covered.">        return (root, query, cb) -&gt; labelId == null ? cb.conjunction()</span>
+<span class="fc" id="L37">                : cb.equal(root.join(&quot;labels&quot;).get(&quot;id&quot;), labelId);</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.9.202303310957</span></div></body></html>

@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<checkstyle version="9.3">
+<file name="/home/serebvl/java-project-99/src/test/java/hexlet/code/util/ModelGenerator.java">
+</file>
+<file name="/home/serebvl/java-project-99/src/test/java/hexlet/code/util/Config.java">
+<error line="9" column="5" severity="error" message="Class &apos;Config&apos; looks like designed for extension (can be subclassed), but the method &apos;faker&apos; does not have javadoc that explains how to do that safely. If class is not designed for extension consider making the class &apos;Config&apos; final or making the method &apos;faker&apos; static/final/abstract/empty, or adding allowed annotation for the method." source="com.puppycrawl.tools.checkstyle.checks.design.DesignForExtensionCheck"/>
+</file>
+<file name="/home/serebvl/java-project-99/src/test/java/hexlet/code/controller/TaskControllerTest.java">
+</file>
+<file name="/home/serebvl/java-project-99/src/test/java/hexlet/code/controller/TaskStatusControllerTest.java">
+<error line="8" column="30" severity="error" message="Using the &apos;.*&apos; form of import should be avoided - hexlet.code.repository.*." source="com.puppycrawl.tools.checkstyle.checks.imports.AvoidStarImportCheck"/>
+</file>
+<file name="/home/serebvl/java-project-99/src/test/java/hexlet/code/controller/UserControllerTest.java">
+</file>
+<file name="/home/serebvl/java-project-99/src/test/java/hexlet/code/controller/LabelControllerTest.java">
+</file>
+</checkstyle>

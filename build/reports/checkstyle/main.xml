@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<checkstyle version="9.3">
+<file name="/home/serebvl/java-project-99/src/main/java/hexlet/code/util/JWTUtils.java">
+</file>
+<file name="/home/serebvl/java-project-99/src/main/java/hexlet/code/util/UserUtils.java">
+</file>
+<file name="/home/serebvl/java-project-99/src/main/java/hexlet/code/component/DataInitializer.java">
+</file>
+<file name="/home/serebvl/java-project-99/src/main/java/hexlet/code/component/RsaKeyProperties.java">
+</file>
+<file name="/home/serebvl/java-project-99/src/main/java/hexlet/code/model/BaseEntity.java">
+</file>
+<file name="/home/serebvl/java-project-99/src/main/java/hexlet/code/model/TaskStatus.java">
+</file>
+<file name="/home/serebvl/java-project-99/src/main/java/hexlet/code/model/Task.java">
+</file>
+<file name="/home/serebvl/java-project-99/src/main/java/hexlet/code/model/Label.java">
+</file>
+<file name="/home/serebvl/java-project-99/src/main/java/hexlet/code/model/User.java">
+</file>
+<file name="/home/serebvl/java-project-99/src/main/java/hexlet/code/controller/UsersController.java">
+</file>
+<file name="/home/serebvl/java-project-99/src/main/java/hexlet/code/controller/WelcomeController.java">
+</file>
+<file name="/home/serebvl/java-project-99/src/main/java/hexlet/code/controller/TaskController.java">
+</file>
+<file name="/home/serebvl/java-project-99/src/main/java/hexlet/code/controller/TaskStatusController.java">
+</file>
+<file name="/home/serebvl/java-project-99/src/main/java/hexlet/code/controller/AuthenticationController.java">
+</file>
+<file name="/home/serebvl/java-project-99/src/main/java/hexlet/code/controller/LabelController.java">
+</file>
+<file name="/home/serebvl/java-project-99/src/main/java/hexlet/code/dto/TaskCreateDTO.java">
+</file>
+<file name="/home/serebvl/java-project-99/src/main/java/hexlet/code/dto/TaskStatusDTO.java">
+</file>
+<file name="/home/serebvl/java-project-99/src/main/java/hexlet/code/dto/UserUpdateDTO.java">
+</file>
+<file name="/home/serebvl/java-project-99/src/main/java/hexlet/code/dto/TaskUpdateDTO.java">
+</file>
+<file name="/home/serebvl/java-project-99/src/main/java/hexlet/code/dto/AuthRequest.java">
+</file>
+<file name="/home/serebvl/java-project-99/src/main/java/hexlet/code/dto/LabelCreateDTO.java">
+</file>
+<file name="/home/serebvl/java-project-99/src/main/java/hexlet/code/dto/TaskParamsDTO.java">
+</file>
+<file name="/home/serebvl/java-project-99/src/main/java/hexlet/code/dto/TaskStatusUpdateDTO.java">
+</file>
+<file name="/home/serebvl/java-project-99/src/main/java/hexlet/code/dto/TaskDTO.java">
+</file>
+<file name="/home/serebvl/java-project-99/src/main/java/hexlet/code/dto/UserDTO.java">
+</file>
+<file name="/home/serebvl/java-project-99/src/main/java/hexlet/code/dto/UserCreateDTO.java">
+</file>
+<file name="/home/serebvl/java-project-99/src/main/java/hexlet/code/dto/TaskStatusCreateDTO.java">
+</file>
+<file name="/home/serebvl/java-project-99/src/main/java/hexlet/code/dto/LabelDTO.java">
+</file>
+<file name="/home/serebvl/java-project-99/src/main/java/hexlet/code/dto/LabelUpdateDTO.java">
+</file>
+<file name="/home/serebvl/java-project-99/src/main/java/hexlet/code/exception/ResourceNotFoundException.java">
+</file>
+<file name="/home/serebvl/java-project-99/src/main/java/hexlet/code/handler/GlobalExceptionHandler.java">
+</file>
+<file name="/home/serebvl/java-project-99/src/main/java/hexlet/code/repository/TaskStatusRepository.java">
+</file>
+<file name="/home/serebvl/java-project-99/src/main/java/hexlet/code/repository/TaskRepository.java">
+</file>
+<file name="/home/serebvl/java-project-99/src/main/java/hexlet/code/repository/LabelRepository.java">
+</file>
+<file name="/home/serebvl/java-project-99/src/main/java/hexlet/code/repository/UserRepository.java">
+</file>
+<file name="/home/serebvl/java-project-99/src/main/java/hexlet/code/specification/TaskSpecification.java">
+</file>
+<file name="/home/serebvl/java-project-99/src/main/java/hexlet/code/AppApplication.java">
+</file>
+<file name="/home/serebvl/java-project-99/src/main/java/hexlet/code/mapper/JsonNullableMapper.java">
+</file>
+<file name="/home/serebvl/java-project-99/src/main/java/hexlet/code/mapper/UserMapper.java">
+<error line="35" column="5" severity="error" message="Class &apos;UserMapper&apos; looks like designed for extension (can be subclassed), but the method &apos;encryptPassword&apos; does not have javadoc that explains how to do that safely. If class is not designed for extension consider making the class &apos;UserMapper&apos; final or making the method &apos;encryptPassword&apos; static/final/abstract/empty, or adding allowed annotation for the method." source="com.puppycrawl.tools.checkstyle.checks.design.DesignForExtensionCheck"/>
+</file>
+<file name="/home/serebvl/java-project-99/src/main/java/hexlet/code/mapper/TaskStatusMapper.java">
+</file>
+<file name="/home/serebvl/java-project-99/src/main/java/hexlet/code/mapper/TaskMapper.java">
+</file>
+<file name="/home/serebvl/java-project-99/src/main/java/hexlet/code/mapper/LabelMapper.java">
+</file>
+<file name="/home/serebvl/java-project-99/src/main/java/hexlet/code/service/UserService.java">
+</file>
+<file name="/home/serebvl/java-project-99/src/main/java/hexlet/code/service/CustomUserDetailsService.java">
+</file>
+<file name="/home/serebvl/java-project-99/src/main/java/hexlet/code/service/TaskStatusService.java">
+</file>
+<file name="/home/serebvl/java-project-99/src/main/java/hexlet/code/service/LabelService.java">
+</file>
+<file name="/home/serebvl/java-project-99/src/main/java/hexlet/code/service/TaskService.java">
+</file>
+<file name="/home/serebvl/java-project-99/src/main/java/hexlet/code/config/JacksonConfig.java">
+<error line="12" column="5" severity="error" message="Class &apos;JacksonConfig&apos; looks like designed for extension (can be subclassed), but the method &apos;objectMapperBuilder&apos; does not have javadoc that explains how to do that safely. If class is not designed for extension consider making the class &apos;JacksonConfig&apos; final or making the method &apos;objectMapperBuilder&apos; static/final/abstract/empty, or adding allowed annotation for the method." source="com.puppycrawl.tools.checkstyle.checks.design.DesignForExtensionCheck"/>
+</file>
+<file name="/home/serebvl/java-project-99/src/main/java/hexlet/code/config/SecurityConfig.java">
+<error line="33" column="5" severity="error" message="Class &apos;SecurityConfig&apos; looks like designed for extension (can be subclassed), but the method &apos;securityFilterChain&apos; does not have javadoc that explains how to do that safely. If class is not designed for extension consider making the class &apos;SecurityConfig&apos; final or making the method &apos;securityFilterChain&apos; static/final/abstract/empty, or adding allowed annotation for the method." source="com.puppycrawl.tools.checkstyle.checks.design.DesignForExtensionCheck"/>
+<error line="55" column="5" severity="error" message="Class &apos;SecurityConfig&apos; looks like designed for extension (can be subclassed), but the method &apos;authenticationManager&apos; does not have javadoc that explains how to do that safely. If class is not designed for extension consider making the class &apos;SecurityConfig&apos; final or making the method &apos;authenticationManager&apos; static/final/abstract/empty, or adding allowed annotation for the method." source="com.puppycrawl.tools.checkstyle.checks.design.DesignForExtensionCheck"/>
+<error line="61" column="5" severity="error" message="Class &apos;SecurityConfig&apos; looks like designed for extension (can be subclassed), but the method &apos;daoAuthProvider&apos; does not have javadoc that explains how to do that safely. If class is not designed for extension consider making the class &apos;SecurityConfig&apos; final or making the method &apos;daoAuthProvider&apos; static/final/abstract/empty, or adding allowed annotation for the method." source="com.puppycrawl.tools.checkstyle.checks.design.DesignForExtensionCheck"/>
+</file>
+<file name="/home/serebvl/java-project-99/src/main/java/hexlet/code/config/EncodersConfig.java">
+<error line="25" column="5" severity="error" message="Class &apos;EncodersConfig&apos; looks like designed for extension (can be subclassed), but the method &apos;passwordEncoder&apos; does not have javadoc that explains how to do that safely. If class is not designed for extension consider making the class &apos;EncodersConfig&apos; final or making the method &apos;passwordEncoder&apos; static/final/abstract/empty, or adding allowed annotation for the method." source="com.puppycrawl.tools.checkstyle.checks.design.DesignForExtensionCheck"/>
+<error line="30" column="5" severity="error" message="Class &apos;EncodersConfig&apos; looks like designed for extension (can be subclassed), but the method &apos;jwtEncoder&apos; does not have javadoc that explains how to do that safely. If class is not designed for extension consider making the class &apos;EncodersConfig&apos; final or making the method &apos;jwtEncoder&apos; static/final/abstract/empty, or adding allowed annotation for the method." source="com.puppycrawl.tools.checkstyle.checks.design.DesignForExtensionCheck"/>
+<error line="37" column="5" severity="error" message="Class &apos;EncodersConfig&apos; looks like designed for extension (can be subclassed), but the method &apos;jwtDecoder&apos; does not have javadoc that explains how to do that safely. If class is not designed for extension consider making the class &apos;EncodersConfig&apos; final or making the method &apos;jwtDecoder&apos; static/final/abstract/empty, or adding allowed annotation for the method." source="com.puppycrawl.tools.checkstyle.checks.design.DesignForExtensionCheck"/>
+</file>
+</checkstyle>

@@ -1,0 +1,16 @@
+spring:
+  output:
+    ansi:
+      enabled: always
+  jpa:
+    generate-ddl: true
+    show-sql: true
+    hibernate:
+      ddl-auto: update
+rsa:
+  private-key: classpath:certs/private.pem
+  public-key: classpath:certs/public.pem
+sentry:
+  dsn: https://24b0dadd1e516198ba0b927db76227b4@o4506712353275904.ingest.sentry.io/4506712395939840
+  tracesSampleRate: 1.0
+  exception-resolver-order: -2147483647

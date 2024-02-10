@@ -1,0 +1,4 @@
+spring:
+  datasource:
+    url: jdbc:postgresql://dpg-clvjameg1b2c73ch8p30-a:5432/db_java_project_72?password=QCRJLS4eEM8rSZ87DUewKOzT4Xzd6Tb9&user=db_java_project_72_user
+
