@@ -27,6 +27,7 @@ import org.springframework.security.test.web.servlet.request.SecurityMockMvcRequ
 import org.springframework.test.web.servlet.MockMvc;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import java.util.List;
@@ -105,6 +106,19 @@ public final class TaskControllerTest {
         assertThatJson(body).isArray().hasSize(0);
     }
 
+    @Test
+    public void testTaskShow() throws Exception {
+        taskRepository.save(testTask);
+        var result = mockMvc.perform(get("/api/tasks/" + testTask.getId()).with(token))
+                .andExpect(status().isOk())
+                .andReturn();
+        var body = result.getResponse().getContentAsString();
+        assertThatJson(body).and(
+                v -> v.node("title").isEqualTo(testTask.getName()),
+                v -> v.node("content").isEqualTo(testTask.getDescription())
+        );
+    }
+
 
     @Test
     public void testTaskCreate() throws Exception {
@@ -138,5 +152,14 @@ public final class TaskControllerTest {
 
         testTask = taskRepository.findById(testTask.getId()).get();
         assertThat(testTask.getName()).isEqualTo(data.getTitle().get());
+    }
+
+    @Test
+    public void testTaskDestroy() throws Exception {
+        taskRepository.save(testTask);
+        var result = delete("/api/tasks/" + testTask.getId()).with(token);
+        mockMvc.perform(result)
+                .andExpect(status().isNoContent());
+        assertThat(taskRepository.existsById(testTask.getId())).isEqualTo(false);
     }
 }

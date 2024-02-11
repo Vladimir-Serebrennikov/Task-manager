@@ -19,6 +19,7 @@ import org.springframework.security.test.web.servlet.request.SecurityMockMvcRequ
 import org.springframework.test.web.servlet.MockMvc;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 import net.datafaker.Faker;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
@@ -58,12 +59,26 @@ public final class UserControllerTest {
     }
 
     @Test
-    public void testIndex() throws Exception {
+    public void testUserIndex() throws Exception {
         var result = mockMvc.perform(get("/api/users").with(token))
                 .andExpect(status().isOk())
                 .andReturn();
         var body = result.getResponse().getContentAsString();
         assertThatJson(body).isArray();
+    }
+
+    @Test
+    public void testUserShow() throws Exception {
+        userRepository.save(testUser);
+        var result = mockMvc.perform(get("/api/users/" + testUser.getId()).with(token))
+                .andExpect(status().isOk())
+                .andReturn();
+        var body = result.getResponse().getContentAsString();
+        assertThatJson(body).and(
+                v -> v.node("email").isEqualTo(testUser.getEmail()),
+                v -> v.node("firstName").isEqualTo(testUser.getFirstName()),
+                v -> v.node("lastName").isEqualTo(testUser.getLastName())
+        );
     }
 
     @Test
@@ -101,6 +116,15 @@ public final class UserControllerTest {
 
         var user = userRepository.findById(testUser.getId()).get();
         assertThat(user.getEmail()).isEqualTo(("testemail@test.com"));
+    }
+
+    @Test
+    public void testUserDestroy() throws Exception {
+        userRepository.save(testUser);
+        var result = delete("/api/users/" + testUser.getId()).with(token);
+        mockMvc.perform(result)
+                .andExpect(status().isNoContent());
+        assertThat(userRepository.existsById(testUser.getId())).isEqualTo(false);
     }
 
 

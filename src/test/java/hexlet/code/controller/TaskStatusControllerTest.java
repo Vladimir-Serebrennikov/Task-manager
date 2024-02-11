@@ -21,6 +21,7 @@ import org.springframework.security.test.web.servlet.request.SecurityMockMvcRequ
 import org.springframework.test.web.servlet.MockMvc;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import java.util.HashMap;
@@ -75,6 +76,19 @@ public final class TaskStatusControllerTest {
     }
 
     @Test
+    public void testTaskStatusShow() throws Exception {
+        taskStatusRepository.save(testTaskStatus);
+        var result = mockMvc.perform(get("/api/task_statuses/" + testTaskStatus.getId()).with(token))
+                .andExpect(status().isOk())
+                .andReturn();
+        var body = result.getResponse().getContentAsString();
+        assertThatJson(body).and(
+                v -> v.node("name").isEqualTo(testTaskStatus.getName()),
+                v -> v.node("slug").isEqualTo(testTaskStatus.getSlug())
+        );
+    }
+
+    @Test
     public void testTaskStatusesCreate() throws Exception {
         var data = Instancio.of(modelGenerator.getTaskStatusModel())
                 .create();
@@ -108,5 +122,14 @@ public final class TaskStatusControllerTest {
 
         var taskStatus = taskStatusRepository.findById(testTaskStatus.getId()).get();
         assertThat(taskStatus.getName()).isEqualTo(("newStatus"));
+    }
+
+    @Test
+    public void testTaskStatusDestroy() throws Exception {
+        taskStatusRepository.save(testTaskStatus);
+        var result = delete("/api/task_statuses/" + testTaskStatus.getId()).with(token);
+        mockMvc.perform(result)
+                .andExpect(status().isNoContent());
+        assertThat(taskRepository.existsById(testTaskStatus.getId())).isEqualTo(false);
     }
 }

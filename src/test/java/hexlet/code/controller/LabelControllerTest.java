@@ -24,6 +24,7 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.jwt;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @SpringBootTest
@@ -66,6 +67,18 @@ public final class LabelControllerTest {
     }
 
     @Test
+    public void testLabelShow() throws Exception {
+        labelRepository.save(testLabel);
+        var result = mockMvc.perform(get("/api/labels/" + testLabel.getId()).with(token))
+                .andExpect(status().isOk())
+                .andReturn();
+        var body = result.getResponse().getContentAsString();
+        assertThatJson(body).and(
+                v -> v.node("name").isEqualTo(testLabel.getName())
+        );
+    }
+
+    @Test
     public void testLabelCreate() throws Exception {
         var dto = labelMapper.map(testLabel);
         var request = post("/api/labels")
@@ -94,5 +107,14 @@ public final class LabelControllerTest {
 
         testLabel = labelRepository.findById(testLabel.getId()).get();
         assertThat(testLabel.getName()).isEqualTo(data.getName().get());
+    }
+
+    @Test
+    public void testLabelDestroy() throws Exception {
+        labelRepository.save(testLabel);
+        var result = delete("/api/labels/" + testLabel.getId()).with(token);
+        mockMvc.perform(result)
+                .andExpect(status().isNoContent());
+        assertThat(labelRepository.existsById(testLabel.getId())).isEqualTo(false);
     }
 }
