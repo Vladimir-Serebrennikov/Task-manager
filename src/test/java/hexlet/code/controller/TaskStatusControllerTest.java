@@ -5,7 +5,8 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import hexlet.code.mapper.TaskStatusMapper;
-import hexlet.code.repository.*;
+import hexlet.code.repository.TaskStatusRepository;
+import hexlet.code.repository.TaskRepository;
 import org.springframework.http.MediaType;
 
 import hexlet.code.model.TaskStatus;

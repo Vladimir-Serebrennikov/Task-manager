@@ -1,14 +1,12 @@
 package hexlet.code.dto;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import hexlet.code.model.Label;
-import hexlet.code.model.TaskStatus;
 import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
 import lombok.Setter;
 import org.openapitools.jackson.nullable.JsonNullable;
 
-import java.util.List;
+import java.util.Set;
 
 @Getter
 @Setter
@@ -17,8 +15,8 @@ public class TaskUpdateDTO {
     private JsonNullable<String> title;
     private JsonNullable<String> content;
     private JsonNullable<Integer> index;
-    private JsonNullable<TaskStatus> status;
+    private JsonNullable<String> status;
     @JsonProperty("assignee_id")
     private JsonNullable<Long> assigneeId;
-    private JsonNullable<List<Label>> labels;
+    private JsonNullable<Set<Long>> taskLabels;
 }

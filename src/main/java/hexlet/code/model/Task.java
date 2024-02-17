@@ -18,7 +18,7 @@ import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import java.time.LocalDate;
-import java.util.List;
+import java.util.Set;
 
 import static jakarta.persistence.GenerationType.IDENTITY;
 
@@ -55,5 +55,5 @@ public class Task implements BaseEntity {
     private LocalDate createdAt;
 
     @ManyToMany
-    private List<Label> labels;
+    private Set<Label> labels;
 }
