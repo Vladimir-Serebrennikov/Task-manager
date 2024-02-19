@@ -39,7 +39,7 @@ public final class User implements BaseEntity, UserDetails {
     @GeneratedValue(strategy = IDENTITY)
     @EqualsAndHashCode.Include
     @ToString.Include
-    private long id;
+    private Long id;
 
     @ToString.Include
     private String firstName;
