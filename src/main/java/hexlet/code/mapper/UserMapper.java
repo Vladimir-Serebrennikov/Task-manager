@@ -13,10 +13,10 @@ import hexlet.code.dto.UserDTO;
 import hexlet.code.dto.UserCreateDTO;
 import hexlet.code.dto.UserUpdateDTO;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 @Mapper(
-        uses = { JsonNullableMapper.class },
+        uses = { JsonNullableMapper.class, ReferenceMapper.class },
         nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE,
         componentModel = MappingConstants.ComponentModel.SPRING,
         unmappedTargetPolicy = ReportingPolicy.IGNORE
@@ -24,7 +24,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 public abstract class UserMapper {
 
     @Autowired
-    private BCryptPasswordEncoder encoder;
+    private PasswordEncoder passwordEncoder;
 
     public abstract UserDTO map(User model);
     @Mapping(target = "passwordDigest", source = "password")
@@ -35,7 +35,7 @@ public abstract class UserMapper {
     @BeforeMapping
     public void encryptPassword(UserCreateDTO data) {
         var password = data.getPassword();
-        data.setPassword(encoder.encode(password));
+        data.setPassword(passwordEncoder.encode(password));
     }
 
 }
