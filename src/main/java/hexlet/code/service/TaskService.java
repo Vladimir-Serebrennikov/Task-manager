@@ -83,9 +83,6 @@ public final class  TaskService {
         if (dto.getAssigneeId() != null) {
             user = userRepository.findById(dto.getAssigneeId()).orElseThrow();
         }
-        if (user.getId() == null) {
-            user = userRepository.save(user);
-        }
         List<Label> labels = null;
         if (dto.getTaskLabels() != null) {
             labels = labelRepository.findAllById(dto.getTaskLabels());
@@ -93,5 +90,6 @@ public final class  TaskService {
         model.setTaskStatus(taskStatus);
         model.setAssignee(user);
         model.setLabels(labels != null ? new HashSet<>(labels) : new HashSet<>());
+
     }
 }
