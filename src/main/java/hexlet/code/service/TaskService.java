@@ -59,8 +59,8 @@ public final class  TaskService {
     public TaskDTO create(TaskCreateDTO data) {
         var task = taskMapper.map(data);
         slugToTaskStatus(data, task);
-        taskRepository.save(task);
-        return taskMapper.map(task);
+        Task saved = taskRepository.save(task);
+        return taskMapper.map(saved);
     }
 
     public TaskDTO findById(Long id) {
@@ -70,11 +70,11 @@ public final class  TaskService {
     }
 
     public void slugToTaskStatus(TaskCreateDTO dto, Task model) {
-        var taskStatus = new TaskStatus();
+        TaskStatus taskStatus = null;
         if (dto.getStatus() != null) {
             taskStatus = taskStatusRepository.findBySlug(dto.getStatus()).orElseThrow();
         }
-        var user = new User();
+        User user = null;
         if (dto.getAssigneeId() != null) {
             user = userRepository.findById(dto.getAssigneeId()).orElseThrow();
         }

@@ -42,7 +42,7 @@ public class Task implements BaseEntity {
     @ToString.Include
     @ManyToOne
     private TaskStatus taskStatus;
-    @ManyToOne(cascade = CascadeType.PERSIST)
+    @ManyToOne
     @ToString.Include
     private User assignee;
     @CreatedDate
