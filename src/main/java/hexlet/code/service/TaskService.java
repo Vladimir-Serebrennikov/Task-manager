@@ -59,11 +59,6 @@ public final class  TaskService {
     public TaskDTO create(TaskCreateDTO data) {
         var task = taskMapper.map(data);
         slugToTaskStatus(data, task);
-        if (task.getAssignee() != null && task.getAssignee().getId() == null) {
-            User user = userRepository.save(task.getAssignee());
-            task.setAssignee(user);
-        }
-
         taskRepository.save(task);
         return taskMapper.map(task);
     }
