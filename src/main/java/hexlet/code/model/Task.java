@@ -12,7 +12,7 @@ import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import java.time.*;
-import java.util.Set;
+import java.util.*;
 
 import static jakarta.persistence.GenerationType.IDENTITY;
 
@@ -49,5 +49,8 @@ public class Task implements BaseEntity {
     private LocalDate createdAt;
 
     @ManyToMany
-    private Set<Label> labels;
+    @JoinTable(name = "tasks_labels",
+            joinColumns = @JoinColumn(name = "task_id"),
+            inverseJoinColumns = @JoinColumn(name = "labels_id"))
+    private Set<Label> labels = new LinkedHashSet<>();
 }
