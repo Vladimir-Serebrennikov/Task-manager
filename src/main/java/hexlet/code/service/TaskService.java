@@ -79,8 +79,8 @@ public final class  TaskService {
             user = userRepository.findById(dto.getAssigneeId()).orElseThrow();
         }
         List<Label> labels = null;
-        if (dto.getTaskLabels() != null) {
-            labels = labelRepository.findAllById(dto.getTaskLabels());
+        if (dto.getTaskLabelIds() != null) {
+            labels = labelRepository.findAllById(dto.getTaskLabelIds());
         }
         model.setTaskStatus(taskStatus);
         model.setAssignee(user);
