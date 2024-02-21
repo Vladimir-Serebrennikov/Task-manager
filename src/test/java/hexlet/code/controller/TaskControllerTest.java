@@ -137,7 +137,7 @@ public final class TaskControllerTest {
         var data = new TaskCreateDTO();
         data.setTitle(testTask.getName());
         data.setStatus(taskStatus.getSlug());
-        data.setTaskLabels(Set.of(label.getId()));
+        data.setTaskLabelIds(Set.of(label.getId()));
         data.setAssigneeId(testUser.getId());
 
         mockMvc.perform(post("/api/tasks").with(token)
