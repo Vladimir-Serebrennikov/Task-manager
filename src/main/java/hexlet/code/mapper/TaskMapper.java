@@ -29,7 +29,7 @@ public abstract class TaskMapper {
     @Mapping(target = "content", source = "description")
     @Mapping(target = "status", source = "taskStatus.slug")
     @Mapping(target = "assigneeId", source = "assignee.id")
-    @Mapping(target = "taskLabels", expression = "java(toLabelId(model.getLabels()))")
+    @Mapping(target = "taskLabelIds", source = "labels")
     public abstract TaskDTO map(Task model);
 
     @Mapping(target = "name", source = "title")

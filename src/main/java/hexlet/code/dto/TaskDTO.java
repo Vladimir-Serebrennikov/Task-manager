@@ -19,6 +19,6 @@ public class TaskDTO {
     private LocalDate createdAt;
     @JsonProperty("assignee_id")
     private long assigneeId;
-    private Set<Long> taskLabels;
+    private Set<Long> taskLabelIds;
 
 }
