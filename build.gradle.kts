@@ -8,7 +8,6 @@ plugins {
     id("com.github.ben-manes.versions") version "0.50.0"
     id("com.github.johnrengelman.shadow") version "8.1.1"
     id("io.sentry.jvm.gradle") version "4.2.0"
-    id("checkstyle")
 }
 
 group = "hexlet.code"
