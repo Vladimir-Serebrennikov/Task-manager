@@ -4,6 +4,9 @@ import hexlet.code.dto.TaskStatusCreateDTO;
 import hexlet.code.dto.TaskStatusDTO;
 import hexlet.code.dto.TaskStatusUpdateDTO;
 import hexlet.code.exception.ResourceNotFoundException;
+import hexlet.code.exception.EntityAssociationException;
+import hexlet.code.repository.TaskStatusRepository;
+import hexlet.code.repository.TaskRepository;
 import hexlet.code.service.TaskStatusService;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
@@ -18,7 +21,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.beans.factory.annotation.Autowired;
-import hexlet.code.repository.TaskStatusRepository;
 import hexlet.code.mapper.TaskStatusMapper;
 
 import java.util.List;
@@ -33,6 +35,9 @@ public final class TaskStatusController {
 
     @Autowired
     private TaskStatusService taskStatusService;
+
+    @Autowired
+    private TaskRepository taskRepository;
 
     @GetMapping(path = "/{id}")
     @ResponseStatus(HttpStatus.OK)
@@ -69,6 +74,12 @@ public final class TaskStatusController {
     @DeleteMapping(path = "/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void delete(@PathVariable Long id) {
+        var taskStatus = taskStatusRepository.findById(id)
+                        .orElseThrow(() -> new ResourceNotFoundException("Task status with id " + id
+                        + " not found"));
+        if (taskStatus != null && taskRepository.findByTaskStatusName(taskStatus.getName()).isPresent()) {
+            throw new EntityAssociationException("You cannot delete a task status with an assigned task");
+        }
         taskStatusRepository.deleteById(id);
     }
 }

@@ -59,8 +59,8 @@ public final class  TaskService {
     public TaskDTO create(TaskCreateDTO data) {
         var task = taskMapper.map(data);
         slugToTaskStatus(data, task);
-        Task saved = taskRepository.save(task);
-        return taskMapper.map(saved);
+        var savedTask = taskRepository.save(task);
+        return taskMapper.map(savedTask);
     }
 
     public TaskDTO findById(Long id) {

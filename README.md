@@ -9,7 +9,7 @@
 Task Manager is a system for task managing. You can create tasks, set assigners and change its statuses. Registration and authentication are required.
 
 ### Example of a deployed website on Render.com:
-[java-project-99](https://java-project-99-m7zy.onrender.com)
+[Task-manager](https://java-project-99-m7zy.onrender.com)
 
 ## Local start
 

@@ -4,8 +4,10 @@ import hexlet.code.dto.LabelCreateDTO;
 import hexlet.code.dto.LabelDTO;
 import hexlet.code.dto.LabelUpdateDTO;
 import hexlet.code.exception.ResourceNotFoundException;
+import hexlet.code.exception.EntityAssociationException;
 import hexlet.code.mapper.LabelMapper;
 import hexlet.code.repository.LabelRepository;
+import hexlet.code.repository.TaskRepository;
 import hexlet.code.service.LabelService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,6 +34,9 @@ public final class LabelController {
     private LabelMapper labelMapper;
     @Autowired
     private LabelService labelService;
+
+    @Autowired
+    private TaskRepository taskRepository;
 
     @GetMapping(path = "")
     public ResponseEntity<List<LabelDTO>> index() {
@@ -68,6 +73,11 @@ public final class LabelController {
     @DeleteMapping(path = "/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void delete(@PathVariable Long id) {
+        var label = labelRepository.findById(id)
+                        .orElseThrow(() -> new ResourceNotFoundException("Label with id " + id + " not found"));
+        if (label != null && taskRepository.findByLabelsName(label.getName()).isPresent()) {
+            throw new EntityAssociationException("You cannot delete a label with an assigned task");
+        }
         labelRepository.deleteById(id);
     }
 

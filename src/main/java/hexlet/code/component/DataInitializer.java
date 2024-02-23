@@ -41,23 +41,23 @@ public final class DataInitializer implements ApplicationRunner {
         var user = userRepository.findByEmail(email).get();
 
         var draft = new TaskStatus();
-        draft.setName("draft");
+        draft.setName("Draft");
         draft.setSlug("draft");
 
         var toReview = new TaskStatus();
-        toReview.setName("to review");
+        toReview.setName("ToReview");
         toReview.setSlug("to_review");
 
         var toBeFixed = new TaskStatus();
-        toBeFixed.setName("to be fixed");
+        toBeFixed.setName("ToBeFixed");
         toBeFixed.setSlug("to_be_fixed");
 
         var toPublish = new TaskStatus();
-        toPublish.setName("to publish");
+        toPublish.setName("ToPublish");
         toPublish.setSlug("to_publish");
 
         var published = new TaskStatus();
-        published.setName("published");
+        published.setName("Published");
         published.setSlug("published");
 
         taskStatusRepository.saveAll(List.of(
