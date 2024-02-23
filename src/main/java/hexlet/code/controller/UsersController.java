@@ -3,7 +3,8 @@ package hexlet.code.controller;
 import hexlet.code.dto.UserCreateDTO;
 import hexlet.code.dto.UserDTO;
 import hexlet.code.dto.UserUpdateDTO;
-import hexlet.code.exception.ResourceNotFoundException;
+import hexlet.code.exception.*;
+import hexlet.code.repository.*;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -17,7 +18,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.beans.factory.annotation.Autowired;
-import hexlet.code.repository.UserRepository;
 import hexlet.code.mapper.UserMapper;
 import hexlet.code.service.UserService;
 
@@ -33,6 +33,8 @@ public final class UsersController {
 
     @Autowired
     private UserService userService;
+    @Autowired
+    private TaskRepository taskRepository;
 
     @GetMapping(path = "/{id}")
     @ResponseStatus(HttpStatus.OK)
@@ -69,6 +71,11 @@ public final class UsersController {
     @DeleteMapping(path = "/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void delete(@PathVariable Long id) {
+        var user = userRepository.findById(id)
+                        .orElseThrow(() -> new ResourceNotFoundException("User with id " + id + " not found"));
+        if (user != null && taskRepository.findByAssigneeEmail(user.getEmail()).isPresent()) {
+            throw new EntityAssociationException("You cannot delete a user with an assigned task");
+        }
         userRepository.deleteById(id);
     }
 

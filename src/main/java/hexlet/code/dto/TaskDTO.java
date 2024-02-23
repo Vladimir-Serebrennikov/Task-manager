@@ -1,11 +1,10 @@
 package hexlet.code.dto;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import hexlet.code.model.TaskStatus;
 import lombok.Getter;
 import lombok.Setter;
 
-import java.time.*;
+import java.time.LocalDate;
 import java.util.Set;
 
 @Getter
