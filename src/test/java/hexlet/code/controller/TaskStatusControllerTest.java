@@ -112,6 +112,7 @@ public final class TaskStatusControllerTest {
         taskStatusRepository.save(testTaskStatus);
         var data = new HashMap<>();
         data.put("name", "newStatus");
+        var originalSlug = testTaskStatus.getSlug();
 
         var request = put("/api/task_statuses/" + testTaskStatus.getId())
                 .with(jwt().jwt(builder -> builder.subject(testTaskStatus.getName())))
@@ -123,6 +124,7 @@ public final class TaskStatusControllerTest {
 
         var taskStatus = taskStatusRepository.findById(testTaskStatus.getId()).get();
         assertThat(taskStatus.getName()).isEqualTo(("newStatus"));
+        assertThat(taskStatus.getSlug()).isEqualTo(originalSlug);
     }
 
     @Test

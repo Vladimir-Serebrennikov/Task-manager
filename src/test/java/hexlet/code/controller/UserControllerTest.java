@@ -104,7 +104,9 @@ public final class UserControllerTest {
     public void testUserUpdate() throws Exception {
         var data = new HashMap<>();
         data.put("email", "testemail@test.com");
-        data.put("passwordDigest", "12345123");
+        var originalFirstName = testUser.getFirstName();
+        var originalLastName = testUser.getLastName();
+        var originalPassword = testUser.getPassword();
 
         var request = put("/api/users/" + testUser.getId())
                 .with(jwt().jwt(builder -> builder.subject(testUser.getEmail())))
@@ -116,6 +118,9 @@ public final class UserControllerTest {
 
         var user = userRepository.findById(testUser.getId()).get();
         assertThat(user.getEmail()).isEqualTo(("testemail@test.com"));
+        assertThat(user.getFirstName()).isEqualTo(originalFirstName);
+        assertThat(user.getLastName()).isEqualTo(originalLastName);
+        assertThat(user.getPassword()).isEqualTo(originalPassword);
     }
 
     @Test

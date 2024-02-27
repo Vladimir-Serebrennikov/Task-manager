@@ -156,6 +156,9 @@ public final class TaskControllerTest {
 
         var data = new TaskUpdateDTO();
         data.setTitle(JsonNullable.of("New title"));
+        var originalStatus = testTask.getTaskStatus();
+        var originalDescription = testTask.getDescription();
+        var originalLabels = testTask.getLabels();
 
         var request = put("/api/tasks/" + testTask.getId())
                 .with(jwt().jwt(builder -> builder.subject(testTask.getName())))
@@ -167,6 +170,9 @@ public final class TaskControllerTest {
 
         testTask = taskRepository.findById(testTask.getId()).get();
         assertThat(testTask.getName()).isEqualTo(data.getTitle().get());
+        assertThat(testTask.getTaskStatus()).isEqualTo(originalStatus);
+        assertThat(testTask.getDescription()).isEqualTo(originalDescription);
+        assertThat(testTask.getLabels()).containsAll(originalLabels);
     }
 
     @Test
