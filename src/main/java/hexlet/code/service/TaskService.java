@@ -70,8 +70,8 @@ public final class  TaskService {
         TaskStatus taskStatus = null;
         if (data.getStatus() != null) {
             taskStatus = taskStatusRepository.findBySlug(data.getStatus().get()).orElse(null);
-            task.setTaskStatus(taskStatus);
         }
+        task.setTaskStatus(taskStatus);
 
         Set<Label> labelSet = null;
         if (data.getTaskLabelIds() != null) {

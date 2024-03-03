@@ -171,8 +171,10 @@ public final class TaskControllerTest {
     }
 
     @Test
+    @Transactional
     public void testTaskUpdate() throws Exception {
         taskRepository.save(testTask);
+        labelRepository.save(testLabel);
         Set<Long> labelIds = new HashSet<>();
         labelIds.add(testLabel.getId());
         var data = new TaskUpdateDTO();
