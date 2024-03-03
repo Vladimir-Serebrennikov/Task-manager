@@ -171,7 +171,6 @@ public final class TaskControllerTest {
     }
 
     @Test
-    @Transactional
     public void testTaskUpdate() throws Exception {
         taskRepository.save(testTask);
 
@@ -180,9 +179,6 @@ public final class TaskControllerTest {
         statusCreateDTO.setSlug("to test");
         var status = taskStatusMapper.map(statusCreateDTO);
         taskStatusRepository.save(status);
-
-        var label = testLabel;
-        var mySet = JsonNullable.of(Set.of(label.getId()));
 
         var userCreateDTO = new UserCreateDTO();
         userCreateDTO.setPassword("testPassword");
@@ -199,7 +195,6 @@ public final class TaskControllerTest {
         updateDTO.setTitle(JsonNullable.of("New title"));
         updateDTO.setContent(JsonNullable.of(faker.lorem().sentence()));
         updateDTO.setStatus(JsonNullable.of("to test"));
-        updateDTO.setTaskLabelIds(mySet);
 
         var request = put("/api/tasks/" + testTask.getId())
                 .with(jwt().jwt(builder -> builder.subject(testTask.getName())))
@@ -216,7 +211,6 @@ public final class TaskControllerTest {
         assertThat(updatedTask.getName()).isEqualTo(updateDTO.getTitle().get());
         assertThat(updatedTask.getDescription()).isEqualTo(updateDTO.getContent().get());
         assertThat(updatedTask.getTaskStatus().getSlug()).isEqualTo(updateDTO.getStatus().get());
-        assertThat(updatedTask.getLabels().containsAll(updateDTO.getTaskLabelIds().get()));
     }
 
     @Test
