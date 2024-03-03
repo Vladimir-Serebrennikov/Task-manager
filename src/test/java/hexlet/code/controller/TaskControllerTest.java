@@ -41,7 +41,7 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-import java.util.Set;
+import java.util.*;
 
 import static net.javacrumbs.jsonunit.assertj.JsonAssertions.assertThatJson;
 import static org.assertj.core.api.Assertions.assertThat;
@@ -173,10 +173,13 @@ public final class TaskControllerTest {
     @Test
     public void testTaskUpdate() throws Exception {
         taskRepository.save(testTask);
+        Set<Long> labelIds = new HashSet<>();
+        labelIds.add(testLabel.getId());
         var data = new TaskUpdateDTO();
         data.setTitle(JsonNullable.of("New title"));
         data.setIndex(JsonNullable.of(2023));
         data.setContent(JsonNullable.of("New content"));
+        data.setTaskLabelIds(JsonNullable.of(labelIds));
         var request = put("/api/tasks/" + testTask.getId())
                 .with(token)
                 .contentType(MediaType.APPLICATION_JSON)
