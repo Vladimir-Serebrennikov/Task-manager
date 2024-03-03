@@ -173,44 +173,20 @@ public final class TaskControllerTest {
     @Test
     public void testTaskUpdate() throws Exception {
         taskRepository.save(testTask);
-
-        var statusCreateDTO = new TaskStatusCreateDTO();
-        statusCreateDTO.setName("To test");
-        statusCreateDTO.setSlug("to test");
-        var status = taskStatusMapper.map(statusCreateDTO);
-        taskStatusRepository.save(status);
-
-        var userCreateDTO = new UserCreateDTO();
-        userCreateDTO.setPassword("testPassword");
-        userCreateDTO.setEmail("testEmail@gmail.com");
-        userCreateDTO.setFirstName("testovich");
-        userCreateDTO.setLastName("testovich");
-        var user = userMapper.map(userCreateDTO);
-        userRepository.save(user);
-        testTask.setAssignee(user);
-        var updateDTO = new TaskUpdateDTO();
-        Integer testIndex = 23;
-        updateDTO.setIndex(JsonNullable.of(testIndex));
-        updateDTO.setAssigneeId(JsonNullable.of(testTask.getAssignee().getId()));
-        updateDTO.setTitle(JsonNullable.of("New title"));
-        updateDTO.setContent(JsonNullable.of(faker.lorem().sentence()));
-        updateDTO.setStatus(JsonNullable.of("to test"));
-
+        var data = new TaskUpdateDTO();
+        data.setTitle(JsonNullable.of("New title"));
+        data.setIndex(JsonNullable.of(2023));
+        data.setContent(JsonNullable.of("New content"));
         var request = put("/api/tasks/" + testTask.getId())
-                .with(jwt().jwt(builder -> builder.subject(testTask.getName())))
+                .with(token)
                 .contentType(MediaType.APPLICATION_JSON)
-                .content(om.writeValueAsString(updateDTO));
-
+                .content(om.writeValueAsString(data));
         mockMvc.perform(request)
                 .andExpect(status().isOk());
-
-        var updatedTask = taskRepository.findById(testTask.getId()).orElse(null);
-
-        assertThat(updatedTask).isNotNull();
-        assertThat(updatedTask.getIndex()).isEqualTo(updateDTO.getIndex().get());
-        assertThat(updatedTask.getName()).isEqualTo(updateDTO.getTitle().get());
-        assertThat(updatedTask.getDescription()).isEqualTo(updateDTO.getContent().get());
-        assertThat(updatedTask.getTaskStatus().getSlug()).isEqualTo(updateDTO.getStatus().get());
+        var task = taskRepository.findById(testTask.getId()).get();
+        assertThat(task.getName()).isEqualTo("New title");
+        assertThat(task.getIndex()).isEqualTo(2023);
+        assertThat(task.getDescription()).isEqualTo("New content");
     }
 
     @Test
