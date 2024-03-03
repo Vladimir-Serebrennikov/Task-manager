@@ -1,22 +1,20 @@
 package hexlet.code.service;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import hexlet.code.dto.TaskStatusDTO;
-import hexlet.code.dto.TaskStatusCreateDTO;
+import hexlet.code.dto.TaskStatusDTO.TaskStatusDTO;
+import hexlet.code.dto.TaskStatusDTO.TaskStatusCreateDTO;
 import hexlet.code.mapper.TaskStatusMapper;
 import hexlet.code.repository.TaskStatusRepository;
 
 import java.util.List;
 
 @Service
+@RequiredArgsConstructor
 public final class TaskStatusService {
-    @Autowired
-    private TaskStatusRepository taskStatusRepository;
-
-    @Autowired
-    private TaskStatusMapper taskStatusMapper;
+    private final TaskStatusRepository taskStatusRepository;
+    private final TaskStatusMapper taskStatusMapper;
 
     public List<TaskStatusDTO> getAll() {
         var taskStatuses = taskStatusRepository.findAll();

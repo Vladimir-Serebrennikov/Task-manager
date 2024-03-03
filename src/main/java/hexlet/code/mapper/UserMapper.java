@@ -9,14 +9,14 @@ import org.mapstruct.Mapping;
 import org.mapstruct.BeforeMapping;
 
 import hexlet.code.model.User;
-import hexlet.code.dto.UserDTO;
-import hexlet.code.dto.UserCreateDTO;
-import hexlet.code.dto.UserUpdateDTO;
+import hexlet.code.dto.UserDTO.UserDTO;
+import hexlet.code.dto.UserDTO.UserCreateDTO;
+import hexlet.code.dto.UserDTO.UserUpdateDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 @Mapper(
-        uses = { JsonNullableMapper.class, ReferenceMapper.class },
+        uses = { JsonNullableMapper.class },
         nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE,
         componentModel = MappingConstants.ComponentModel.SPRING,
         unmappedTargetPolicy = ReportingPolicy.IGNORE

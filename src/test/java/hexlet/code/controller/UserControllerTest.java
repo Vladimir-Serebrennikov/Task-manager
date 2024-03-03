@@ -126,6 +126,7 @@ public final class UserControllerTest {
     @Test
     public void testUserDestroy() throws Exception {
         userRepository.save(testUser);
+        token = jwt().jwt(builder -> builder.subject(testUser.getEmail()));
         var result = delete("/api/users/" + testUser.getId()).with(token);
         mockMvc.perform(result)
                 .andExpect(status().isNoContent());

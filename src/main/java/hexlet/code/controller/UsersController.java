@@ -1,15 +1,18 @@
 package hexlet.code.controller;
 
-import hexlet.code.dto.UserCreateDTO;
-import hexlet.code.dto.UserDTO;
-import hexlet.code.dto.UserUpdateDTO;
+import hexlet.code.dto.UserDTO.UserCreateDTO;
+import hexlet.code.dto.UserDTO.UserDTO;
+import hexlet.code.dto.UserDTO.UserUpdateDTO;
 import hexlet.code.exception.EntityAssociationException;
 import hexlet.code.exception.ResourceNotFoundException;
 import hexlet.code.repository.UserRepository;
 import hexlet.code.repository.TaskRepository;
 import jakarta.validation.Valid;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -19,7 +22,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.beans.factory.annotation.Autowired;
 import hexlet.code.mapper.UserMapper;
 import hexlet.code.service.UserService;
 
@@ -27,16 +29,12 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/users")
-public final class UsersController {
-    @Autowired
-    private UserRepository userRepository;
-    @Autowired
-    private UserMapper userMapper;
-
-    @Autowired
-    private UserService userService;
-    @Autowired
-    private TaskRepository taskRepository;
+@RequiredArgsConstructor
+public class UsersController {
+    private final UserRepository userRepository;
+    private final UserMapper userMapper;
+    private final UserService userService;
+    private final TaskRepository taskRepository;
 
     @GetMapping(path = "/{id}")
     @ResponseStatus(HttpStatus.OK)
@@ -72,11 +70,15 @@ public final class UsersController {
 
     @DeleteMapping(path = "/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
+    @PreAuthorize(value = "@userService.findById(#id).getEmail() == authentication.name")
     public void delete(@PathVariable Long id) {
         var user = userRepository.findById(id)
                         .orElseThrow(() -> new ResourceNotFoundException("User with id " + id + " not found"));
         if (user != null && taskRepository.findByAssigneeEmail(user.getEmail()).isPresent()) {
             throw new EntityAssociationException("You cannot delete a user with an assigned task");
+        }
+        if (user != null && !user.getEmail().equals(SecurityContextHolder.getContext().getAuthentication().getName())) {
+            throw new EntityAssociationException("You can only delete your own user account");
         }
         userRepository.deleteById(id);
     }

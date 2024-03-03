@@ -1,12 +1,18 @@
 package hexlet.code.controller;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.jwt;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-import hexlet.code.dto.TaskCreateDTO;
-import hexlet.code.dto.TaskUpdateDTO;
+import hexlet.code.dto.TaskDTO.TaskCreateDTO;
+import hexlet.code.dto.TaskDTO.TaskUpdateDTO;
+import hexlet.code.dto.TaskStatusDTO.TaskStatusCreateDTO;
+import hexlet.code.dto.UserDTO.UserCreateDTO;
 import hexlet.code.mapper.TaskMapper;
+import hexlet.code.mapper.TaskStatusMapper;
+import hexlet.code.mapper.UserMapper;
 import hexlet.code.model.Task;
 import hexlet.code.model.TaskStatus;
 import hexlet.code.model.Label;
@@ -15,6 +21,8 @@ import hexlet.code.repository.TaskRepository;
 import hexlet.code.repository.TaskStatusRepository;
 import hexlet.code.repository.LabelRepository;
 import hexlet.code.repository.UserRepository;
+import jakarta.transaction.Transactional;
+import net.datafaker.Faker;
 import org.openapitools.jackson.nullable.JsonNullable;
 import org.springframework.http.MediaType;
 
@@ -37,7 +45,6 @@ import java.util.Set;
 
 import static net.javacrumbs.jsonunit.assertj.JsonAssertions.assertThatJson;
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 @SpringBootTest
 @AutoConfigureMockMvc
@@ -65,6 +72,15 @@ public final class TaskControllerTest {
 
     @Autowired
     private UserRepository userRepository;
+
+    @Autowired
+    private TaskStatusMapper taskStatusMapper;
+
+    @Autowired
+    private Faker faker;
+
+    @Autowired
+    private UserMapper userMapper;
 
     private SecurityMockMvcRequestPostProcessors.JwtRequestPostProcessor token;
 
@@ -130,6 +146,7 @@ public final class TaskControllerTest {
 
 
     @Test
+    @Transactional
     public void testTaskCreate() throws Exception {
         userRepository.save(testUser);
         var taskStatus = testTaskStatus;
@@ -148,31 +165,58 @@ public final class TaskControllerTest {
 
         var task = taskRepository.findByName(data.getTitle());
         assertNotNull(task.get());
+        assertEquals(data.getTitle(), task.get().getName());
+        assertEquals(data.getStatus(), task.get().getTaskStatus().getSlug());
+        assertThat(data.getTaskLabelIds().containsAll(task.get().getLabels()));
     }
 
     @Test
+    @Transactional
     public void testTaskUpdate() throws Exception {
         taskRepository.save(testTask);
 
-        var data = new TaskUpdateDTO();
-        data.setTitle(JsonNullable.of("New title"));
-        var originalStatus = testTask.getTaskStatus();
-        var originalDescription = testTask.getDescription();
-        var originalLabels = testTask.getLabels();
+        var statusCreateDTO = new TaskStatusCreateDTO();
+        statusCreateDTO.setName("To test");
+        statusCreateDTO.setSlug("to test");
+        var status = taskStatusMapper.map(statusCreateDTO);
+        taskStatusRepository.save(status);
+
+        var label = testLabel;
+        var mySet = JsonNullable.of(Set.of(label.getId()));
+
+        var userCreateDTO = new UserCreateDTO();
+        userCreateDTO.setPassword("testPassword");
+        userCreateDTO.setEmail("testEmail@gmail.com");
+        userCreateDTO.setFirstName("testovich");
+        userCreateDTO.setLastName("testovich");
+        var user = userMapper.map(userCreateDTO);
+        userRepository.save(user);
+        testTask.setAssignee(user);
+        var updateDTO = new TaskUpdateDTO();
+        Integer testIndex = 23;
+        updateDTO.setIndex(JsonNullable.of(testIndex));
+        updateDTO.setAssigneeId(JsonNullable.of(testTask.getAssignee().getId()));
+        updateDTO.setTitle(JsonNullable.of("New title"));
+        updateDTO.setContent(JsonNullable.of(faker.lorem().sentence()));
+        updateDTO.setStatus(JsonNullable.of("to test"));
+        updateDTO.setTaskLabelIds(mySet);
 
         var request = put("/api/tasks/" + testTask.getId())
                 .with(jwt().jwt(builder -> builder.subject(testTask.getName())))
                 .contentType(MediaType.APPLICATION_JSON)
-                .content(om.writeValueAsString(data));
+                .content(om.writeValueAsString(updateDTO));
 
         mockMvc.perform(request)
                 .andExpect(status().isOk());
 
-        testTask = taskRepository.findById(testTask.getId()).get();
-        assertThat(testTask.getName()).isEqualTo(data.getTitle().get());
-        assertThat(testTask.getTaskStatus()).isEqualTo(originalStatus);
-        assertThat(testTask.getDescription()).isEqualTo(originalDescription);
-        assertThat(testTask.getLabels()).containsAll(originalLabels);
+        var updatedTask = taskRepository.findById(testTask.getId()).orElse(null);
+
+        assertThat(updatedTask).isNotNull();
+        assertThat(updatedTask.getIndex()).isEqualTo(updateDTO.getIndex().get());
+        assertThat(updatedTask.getName()).isEqualTo(updateDTO.getTitle().get());
+        assertThat(updatedTask.getDescription()).isEqualTo(updateDTO.getContent().get());
+        assertThat(updatedTask.getTaskStatus().getSlug()).isEqualTo(updateDTO.getStatus().get());
+        assertThat(updatedTask.getLabels().containsAll(updateDTO.getTaskLabelIds().get()));
     }
 
     @Test

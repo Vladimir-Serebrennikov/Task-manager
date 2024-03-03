@@ -1,8 +1,9 @@
 package hexlet.code.service;
 
-import hexlet.code.dto.TaskCreateDTO;
-import hexlet.code.dto.TaskDTO;
-import hexlet.code.dto.TaskParamsDTO;
+import hexlet.code.dto.TaskDTO.TaskDTO;
+import hexlet.code.dto.TaskDTO.TaskParamsDTO;
+import hexlet.code.dto.TaskDTO.TaskCreateDTO;
+import hexlet.code.dto.TaskDTO.TaskUpdateDTO;
 import hexlet.code.exception.ResourceNotFoundException;
 import hexlet.code.mapper.TaskMapper;
 import hexlet.code.model.Task;
@@ -14,31 +15,22 @@ import hexlet.code.repository.TaskStatusRepository;
 import hexlet.code.repository.UserRepository;
 import hexlet.code.repository.LabelRepository;
 import hexlet.code.specification.TaskSpecification;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
+import java.util.HashSet;
 
 @Service
+@RequiredArgsConstructor
 public final class  TaskService {
-    @Autowired
-    private TaskRepository taskRepository;
-
-    @Autowired
-    private TaskMapper taskMapper;
-
-    @Autowired
-    private TaskSpecification taskSpecification;
-
-    @Autowired
-    private TaskStatusRepository taskStatusRepository;
-
-    @Autowired
-    private UserRepository userRepository;
-
-    @Autowired
-    private LabelRepository labelRepository;
+    private final TaskRepository taskRepository;
+    private final TaskMapper taskMapper;
+    private final TaskSpecification taskSpecification;
+    private final TaskStatusRepository taskStatusRepository;
+    private final UserRepository userRepository;
+    private final LabelRepository labelRepository;
 
     public List<TaskDTO> getAll() {
         var tasks = taskRepository.findAll();
@@ -61,6 +53,34 @@ public final class  TaskService {
         slugToTaskStatus(data, task);
         var savedTask = taskRepository.save(task);
         return taskMapper.map(savedTask);
+    }
+
+    public TaskDTO update(Long taskId, TaskUpdateDTO data) {
+        var task = taskRepository.findById(taskId)
+                .orElseThrow(() -> new ResourceNotFoundException("Task with id: " + taskId + " not found."));
+
+        taskMapper.update(data, task);
+
+        User assignee = null;
+        if (data.getAssigneeId() != null) {
+            assignee = userRepository.findById(data.getAssigneeId().get()).orElse(null);
+        }
+        task.setAssignee(assignee);
+
+        TaskStatus taskStatus = null;
+        if (data.getStatus() != null) {
+            taskStatus = taskStatusRepository.findBySlug(data.getStatus().get()).orElse(null);
+            task.setTaskStatus(taskStatus);
+        }
+
+        Set<Label> labelSet = null;
+        if (data.getTaskLabelIds() != null) {
+            labelSet = labelRepository.findByIdIn((data.getTaskLabelIds()).get()).orElse(null);
+        }
+        task.setLabels(labelSet);
+
+        taskRepository.save(task);
+        return taskMapper.map(task);
     }
 
     public TaskDTO findById(Long id) {

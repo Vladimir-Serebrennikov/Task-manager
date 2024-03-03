@@ -1,14 +1,15 @@
 package hexlet.code.controller;
 
-import hexlet.code.dto.TaskStatusCreateDTO;
-import hexlet.code.dto.TaskStatusDTO;
-import hexlet.code.dto.TaskStatusUpdateDTO;
+import hexlet.code.dto.TaskStatusDTO.TaskStatusCreateDTO;
+import hexlet.code.dto.TaskStatusDTO.TaskStatusDTO;
+import hexlet.code.dto.TaskStatusDTO.TaskStatusUpdateDTO;
 import hexlet.code.exception.ResourceNotFoundException;
 import hexlet.code.exception.EntityAssociationException;
 import hexlet.code.repository.TaskStatusRepository;
 import hexlet.code.repository.TaskRepository;
 import hexlet.code.service.TaskStatusService;
 import jakarta.validation.Valid;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RestController;
@@ -20,24 +21,18 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.beans.factory.annotation.Autowired;
 import hexlet.code.mapper.TaskStatusMapper;
 
 import java.util.List;
 
 @RestController
 @RequestMapping("/api/task_statuses")
+@RequiredArgsConstructor
 public final class TaskStatusController {
-    @Autowired
-    private TaskStatusRepository taskStatusRepository;
-    @Autowired
-    private TaskStatusMapper taskStatusMapper;
-
-    @Autowired
-    private TaskStatusService taskStatusService;
-
-    @Autowired
-    private TaskRepository taskRepository;
+    private final TaskStatusRepository taskStatusRepository;
+    private final TaskStatusMapper taskStatusMapper;
+    private final TaskStatusService taskStatusService;
+    private final TaskRepository taskRepository;
 
     @GetMapping(path = "/{id}")
     @ResponseStatus(HttpStatus.OK)

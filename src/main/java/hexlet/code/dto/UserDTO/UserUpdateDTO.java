@@ -1,6 +1,7 @@
-package hexlet.code.dto;
+package hexlet.code.dto.UserDTO;
 
 import jakarta.persistence.Column;
+import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
 import lombok.Getter;
@@ -9,14 +10,13 @@ import org.openapitools.jackson.nullable.JsonNullable;
 
 @Getter
 @Setter
-public class TaskStatusUpdateDTO {
+public class UserUpdateDTO {
     @Column(unique = true)
+    @Email
     @NotBlank
+    private JsonNullable<String> email;
+    private JsonNullable<String> firstName;
+    private JsonNullable<String> lastName;
     @Size(min = 3)
-    private JsonNullable<String> name;
-
-    @Column(unique = true)
-    @NotBlank
-    @Size(min = 3)
-    private JsonNullable<String> slug;
+    private JsonNullable<String> password;
 }

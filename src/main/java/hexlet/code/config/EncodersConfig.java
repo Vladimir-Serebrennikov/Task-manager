@@ -1,7 +1,7 @@
 package hexlet.code.config;
 
 import hexlet.code.component.RsaKeyProperties;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -19,9 +19,9 @@ import com.nimbusds.jose.jwk.source.JWKSource;
 import com.nimbusds.jose.proc.SecurityContext;
 
 @Configuration
+@RequiredArgsConstructor
 public class EncodersConfig {
-    @Autowired
-    private RsaKeyProperties rsaKeys;
+    private final RsaKeyProperties rsaKeys;
     @Bean
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();

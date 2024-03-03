@@ -4,7 +4,7 @@ import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Component;
 
 import hexlet.code.model.Task;
-import hexlet.code.dto.TaskParamsDTO;
+import hexlet.code.dto.TaskDTO.TaskParamsDTO;
 
 @Component
 public final class TaskSpecification {

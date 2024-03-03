@@ -1,20 +1,19 @@
 package hexlet.code.service;
 
-import hexlet.code.dto.LabelCreateDTO;
-import hexlet.code.dto.LabelDTO;
+import hexlet.code.dto.LabelDTO.LabelCreateDTO;
+import hexlet.code.dto.LabelDTO.LabelDTO;
 import hexlet.code.mapper.LabelMapper;
 import hexlet.code.repository.LabelRepository;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Service
+@RequiredArgsConstructor
 public final class LabelService {
-    @Autowired
-    private LabelRepository labelRepository;
-    @Autowired
-    private LabelMapper labelMapper;
+    private final LabelRepository labelRepository;
+    private final LabelMapper labelMapper;
 
     public List<LabelDTO> getAll() {
         var labels = labelRepository.findAll();
