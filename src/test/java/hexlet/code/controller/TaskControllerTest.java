@@ -197,16 +197,20 @@ public final class TaskControllerTest {
         testTask = testGenerate();
         taskRepository.save(testTask);
 
-        var statusCreateDTO = new TaskStatusCreateDTO();
-        statusCreateDTO.setName("To test");
-        statusCreateDTO.setSlug("to test");
-        var status = taskStatusMapper.map(statusCreateDTO);
-        taskStatusRepository.save(status);
+//        var statusCreateDTO = new TaskStatusCreateDTO();
+//        statusCreateDTO.setName("To test");
+//        statusCreateDTO.setSlug("to test");
+//        var status = taskStatusMapper.map(statusCreateDTO);
+//        taskStatusRepository.save(status);
+
+        testTaskStatus = Instancio.of(modelGenerator.getTaskStatusModel())
+                .create();
+        taskStatusRepository.save(testTaskStatus);
 
         var updateDTO = new TaskUpdateDTO();
         updateDTO.setTitle(JsonNullable.of(faker.lorem().word() + "aa"));
         updateDTO.setContent(JsonNullable.of(faker.lorem().sentence()));
-        updateDTO.setStatus(JsonNullable.of(status.getSlug()));
+        updateDTO.setStatus(JsonNullable.of(testTaskStatus.getSlug()));
 
         var request = put("/api/tasks/{id}", testTask.getId()).with(token)
                 .contentType(MediaType.APPLICATION_JSON)
