@@ -18,7 +18,9 @@ import hexlet.code.specification.TaskSpecification;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import java.util.*;
+import java.util.List;
+import java.util.Set;
+import java.util.HashSet;
 
 @Service
 @RequiredArgsConstructor
@@ -67,16 +69,10 @@ public final class  TaskService {
 
         TaskStatus taskStatus = null;
         if (data.getStatus() != null) {
-            // Проверяем, существует ли переданный статус
-            Optional<TaskStatus> optionalTaskStatus = taskStatusRepository.findBySlug(data.getStatus().get());
-            if (optionalTaskStatus.isPresent()) {
-                taskStatus = optionalTaskStatus.get();
-            } else {
-                // Обработка ситуации, когда переданный статус не найден
-                throw new ResourceNotFoundException("Task status with slug: " + data.getStatus().get() + " not found.");
-            }
+            taskStatus = taskStatusRepository.findBySlug(data.getStatus().get()).orElse(null);
+            task.setTaskStatus(taskStatus);
         }
-        task.setTaskStatus(taskStatus);
+
 
         Set<Label> labelSet = null;
         if (data.getTaskLabelIds() != null) {
