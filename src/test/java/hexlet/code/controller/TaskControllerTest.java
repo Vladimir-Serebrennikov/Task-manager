@@ -175,6 +175,7 @@ public final class TaskControllerTest {
     public void testTaskUpdate() throws Exception {
         taskRepository.save(testTask);
         labelRepository.save(testLabel);
+        taskStatusRepository.save(testTaskStatus);
         Set<Long> labelIds = new HashSet<>();
         labelIds.add(testLabel.getId());
         var data = new TaskUpdateDTO();
@@ -182,6 +183,7 @@ public final class TaskControllerTest {
         data.setIndex(JsonNullable.of(2023));
         data.setContent(JsonNullable.of("New content"));
         data.setTaskLabelIds(JsonNullable.of(labelIds));
+        data.setStatus(JsonNullable.of(testTaskStatus.getSlug()));
         var request = put("/api/tasks/" + testTask.getId())
                 .with(token)
                 .contentType(MediaType.APPLICATION_JSON)
