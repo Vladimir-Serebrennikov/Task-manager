@@ -14,6 +14,8 @@ import jakarta.annotation.PostConstruct;
 import lombok.Getter;
 import net.datafaker.Faker;
 
+import java.util.*;
+
 @Getter
 @Component
 public class ModelGenerator {
@@ -37,7 +39,7 @@ public class ModelGenerator {
                 .supply(Select.field(User::getFirstName), () -> faker.name().firstName())
                 .supply(Select.field(User::getLastName), () -> faker.name().lastName())
                 .supply(Select.field(User::getEmail), () -> faker.internet().emailAddress())
-                .supply(Select.field(User::getPasswordDigest), () -> faker.internet().password())
+                .supply(Select.field(User::getPasswordDigest), () -> faker.internet().password(3, 10))
                 .toModel();
 
         taskStatusModel = Instancio.of(TaskStatus.class)
@@ -51,10 +53,10 @@ public class ModelGenerator {
                 .ignore(Select.field(Task::getId))
                 .ignore(Select.field(Task::getCreatedAt))
                 .ignore(Select.field(Task::getAssignee))
-                .ignore(Select.field(Task::getIndex))
-                .ignore(Select.field(Task::getTaskStatus))
                 .supply(Select.field(Task::getName), () -> faker.lorem().characters(5, 10))
                 .supply(Select.field(Task::getDescription), () -> faker.lorem().word())
+                .supply(Select.field(Task::getIndex), () -> faker.random().nextInt(Integer.MAX_VALUE))
+                .supply(Select.field(Task::getLabels), () -> new HashSet<Label>())
                 .toModel();
 
         labelModel = Instancio.of(Label.class)

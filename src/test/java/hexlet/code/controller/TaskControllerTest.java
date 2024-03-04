@@ -23,14 +23,13 @@ import hexlet.code.repository.LabelRepository;
 import hexlet.code.repository.UserRepository;
 import jakarta.transaction.Transactional;
 import net.datafaker.Faker;
+import org.junit.jupiter.api.*;
 import org.openapitools.jackson.nullable.JsonNullable;
 import org.springframework.http.MediaType;
 
 import hexlet.code.util.ModelGenerator;
 
 import org.instancio.Instancio;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -94,20 +93,40 @@ public final class TaskControllerTest {
     @BeforeEach
     public void setUp() {
         token = jwt().jwt(builder -> builder.subject("hexlet@example.com"));
+    }
+
+    private Task testGenerate() {
         testTask = Instancio.of(modelGenerator.getTaskModel())
                 .create();
         testTaskStatus = Instancio.of(modelGenerator.getTaskStatusModel())
                 .create();
-        testLabel = Instancio.of(modelGenerator.getLabelModel())
-                .create();
-        testUser = Instancio.of(modelGenerator.getUserModel())
-                        .create();
         taskStatusRepository.save(testTaskStatus);
         testTask.setTaskStatus(testTaskStatus);
-        testTask.setLabels(Set.of());
+
+        testLabel = Instancio.of(modelGenerator.getLabelModel())
+                .create();
+        labelRepository.save(testLabel);
+        testTask.getLabels().add(testLabel);
+
+        testUser = Instancio.of(modelGenerator.getUserModel())
+                .create();
+        userRepository.save(testUser);
+        testTask.setAssignee(testUser);
+
+        return testTask;
+    }
+
+    @AfterEach
+    public void cleanUp() {
+        taskRepository.deleteAll();
+
+        userRepository.deleteAll();
+        labelRepository.deleteAll();
+        taskStatusRepository.deleteAll();
     }
     @Test
     public void testTaskIndex() throws Exception {
+        testTask = testGenerate();
         taskRepository.save(testTask);
         var result = mockMvc.perform(get("/api/tasks").with(token))
                 .andExpect(status().isOk())
@@ -117,6 +136,7 @@ public final class TaskControllerTest {
     }
     @Test
     public void testTaskIndexWithParams() throws Exception {
+        testTask = testGenerate();
         taskRepository.save(testTask);
         var request = get("/api/tasks?"
                 + "titleCont=" + "testTitle"
@@ -133,6 +153,7 @@ public final class TaskControllerTest {
 
     @Test
     public void testTaskShow() throws Exception {
+        testTask = testGenerate();
         taskRepository.save(testTask);
         var result = mockMvc.perform(get("/api/tasks/" + testTask.getId()).with(token))
                 .andExpect(status().isOk())
@@ -148,14 +169,14 @@ public final class TaskControllerTest {
     @Test
     @Transactional
     public void testTaskCreate() throws Exception {
-        userRepository.save(testUser);
-        var taskStatus = testTaskStatus;
-        var label = testLabel;
+        testTask = testGenerate();
         var data = new TaskCreateDTO();
-        data.setTitle(testTask.getName());
-        data.setStatus(taskStatus.getSlug());
-        data.setTaskLabelIds(Set.of(label.getId()));
-        data.setAssigneeId(testUser.getId());
+        data.setIndex(faker.random().nextInt(Integer.MAX_VALUE));
+        data.setTitle(faker.lorem().characters(5, 10));
+        data.setContent(faker.lorem().word());
+        data.setStatus(testTask.getTaskStatus().getSlug());
+        data.setTaskLabelIds(Set.of(2l));
+        data.setAssigneeId(testTask.getAssignee().getId());
 
         mockMvc.perform(post("/api/tasks").with(token)
                         .content(om.writeValueAsString(data))
@@ -173,31 +194,39 @@ public final class TaskControllerTest {
     @Test
     @Transactional
     public void testTaskUpdate() throws Exception {
+        testTask = testGenerate();
         taskRepository.save(testTask);
-        labelRepository.save(testLabel);
-        taskStatusRepository.save(testTaskStatus);
-        Set<Long> labelIds = new HashSet<>();
-        labelIds.add(testLabel.getId());
-        var data = new TaskUpdateDTO();
-        data.setTitle(JsonNullable.of("New title"));
-        data.setIndex(JsonNullable.of(2023));
-        data.setContent(JsonNullable.of("New content"));
-        data.setTaskLabelIds(JsonNullable.of(labelIds));
-        data.setStatus(JsonNullable.of(testTaskStatus.getSlug()));
-        var request = put("/api/tasks/" + testTask.getId())
-                .with(token)
+
+        var statusCreateDTO = new TaskStatusCreateDTO();
+        statusCreateDTO.setName("To test");
+        statusCreateDTO.setSlug("to test");
+        var status = taskStatusMapper.map(statusCreateDTO);
+        taskStatusRepository.save(status);
+
+        var updateDTO = new TaskUpdateDTO();
+        updateDTO.setTitle(JsonNullable.of(faker.lorem().word() + "aa"));
+        updateDTO.setContent(JsonNullable.of(faker.lorem().sentence()));
+        updateDTO.setStatus(JsonNullable.of("to test"));
+
+        var request = put("/api/tasks/{id}", testTask.getId()).with(token)
                 .contentType(MediaType.APPLICATION_JSON)
-                .content(om.writeValueAsString(data));
+                .content(om.writeValueAsString(updateDTO));
+
         mockMvc.perform(request)
                 .andExpect(status().isOk());
-        var task = taskRepository.findById(testTask.getId()).get();
-        assertThat(task.getName()).isEqualTo("New title");
-        assertThat(task.getIndex()).isEqualTo(2023);
-        assertThat(task.getDescription()).isEqualTo("New content");
+
+        var updatedTask = taskRepository.findById(testTask.getId()).orElse(null);
+
+        assertThat(updatedTask).isNotNull();
+        assertThat(updatedTask.getIndex()).isEqualTo(testTask.getIndex());
+        assertThat(updatedTask.getName()).isEqualTo(updateDTO.getTitle().get());
+        assertThat(updatedTask.getDescription()).isEqualTo(updateDTO.getContent().get());
+        assertThat(updatedTask.getTaskStatus().getSlug()).isEqualTo(testTask.getTaskStatus().getSlug());
     }
 
     @Test
     public void testTaskDestroy() throws Exception {
+        testTask = testGenerate();
         taskRepository.save(testTask);
         var result = delete("/api/tasks/" + testTask.getId()).with(token);
         mockMvc.perform(result)
