@@ -206,7 +206,7 @@ public final class TaskControllerTest {
         var updateDTO = new TaskUpdateDTO();
         updateDTO.setTitle(JsonNullable.of(faker.lorem().word() + "aa"));
         updateDTO.setContent(JsonNullable.of(faker.lorem().sentence()));
-        updateDTO.setStatus(JsonNullable.of("to test"));
+        updateDTO.setStatus(JsonNullable.of(status.getSlug()));
 
         var request = put("/api/tasks/{id}", testTask.getId()).with(token)
                 .contentType(MediaType.APPLICATION_JSON)
