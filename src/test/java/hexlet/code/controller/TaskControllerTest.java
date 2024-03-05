@@ -191,38 +191,38 @@ public final class TaskControllerTest {
         assertThat(data.getTaskLabelIds().containsAll(task.get().getLabels()));
     }
 
-//    @Test
-//    @Transactional
-//    public void testTaskUpdate() throws Exception {
-//        testTask = testGenerate();
-//        taskRepository.save(testTask);
-//
-//        var statusCreateDTO = new TaskStatusCreateDTO();
-//        statusCreateDTO.setName("To test");
-//        statusCreateDTO.setSlug("to test");
-//        var status = taskStatusMapper.map(statusCreateDTO);
-//        taskStatusRepository.save(status);
-//
-//        var updateDTO = new TaskUpdateDTO();
-//        updateDTO.setTitle(JsonNullable.of(faker.lorem().word() + "aa"));
-//        updateDTO.setContent(JsonNullable.of(faker.lorem().sentence()));
-//        updateDTO.setStatus(JsonNullable.of("to test"));
-//
-//        var request = put("/api/tasks/{id}", testTask.getId()).with(token)
-//                .contentType(MediaType.APPLICATION_JSON)
-//                .content(om.writeValueAsString(updateDTO));
-//
-//        mockMvc.perform(request)
-//                .andExpect(status().isOk());
-//
-//        var updatedTask = taskRepository.findById(testTask.getId()).orElse(null);
-//
-//        assertThat(updatedTask).isNotNull();
-//        assertThat(updatedTask.getIndex()).isEqualTo(testTask.getIndex());
-//        assertThat(updatedTask.getName()).isEqualTo(updateDTO.getTitle().get());
-//        assertThat(updatedTask.getDescription()).isEqualTo(updateDTO.getContent().get());
-//        assertThat(updatedTask.getTaskStatus().getSlug()).isEqualTo(testTask.getTaskStatus().getSlug());
-//    }
+    @Test
+    @Transactional
+    public void testTaskUpdate() throws Exception {
+        testTask = testGenerate();
+        taskRepository.save(testTask);
+
+        var statusCreateDTO = new TaskStatusCreateDTO();
+        statusCreateDTO.setName("To test");
+        statusCreateDTO.setSlug("to test");
+        var status = taskStatusMapper.map(statusCreateDTO);
+        taskStatusRepository.save(status);
+
+        var updateDTO = new TaskUpdateDTO();
+        updateDTO.setTitle(JsonNullable.of(faker.lorem().word() + "aa"));
+        updateDTO.setContent(JsonNullable.of(faker.lorem().sentence()));
+        updateDTO.setStatus(JsonNullable.of("to test"));
+
+        var request = put("/api/tasks/{id}", testTask.getId()).with(token)
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(om.writeValueAsString(updateDTO));
+
+        mockMvc.perform(request)
+                .andExpect(status().isOk());
+
+        var updatedTask = taskRepository.findById(testTask.getId()).orElse(null);
+
+        assertThat(updatedTask).isNotNull();
+        assertThat(updatedTask.getIndex()).isEqualTo(testTask.getIndex());
+        assertThat(updatedTask.getName()).isEqualTo(updateDTO.getTitle().get());
+        assertThat(updatedTask.getDescription()).isEqualTo(updateDTO.getContent().get());
+        assertThat(updatedTask.getTaskStatus().getSlug()).isEqualTo(testTask.getTaskStatus().getSlug());
+    }
 
     @Test
     public void testTaskDestroy() throws Exception {
