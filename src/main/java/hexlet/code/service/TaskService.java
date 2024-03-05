@@ -18,9 +18,7 @@ import hexlet.code.specification.TaskSpecification;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
-import java.util.Set;
-import java.util.HashSet;
+import java.util.*;
 
 @Service
 @RequiredArgsConstructor
@@ -74,12 +72,13 @@ public final class  TaskService {
         }
 
 
-        List<Label> labels = null;
+        Optional<Set<Label>> labels = null;
         if (data.getTaskLabelIds() != null) {
-            labels = labelRepository.findAllById(data.getTaskLabelIds().get());
+            labels = labelRepository.findByIdIn(data.getTaskLabelIds().orElse(Collections.emptySet()));
         }
-        Set<Label> labelSet = labels != null ? new HashSet<>(labels) : new HashSet<>();
-        task.setLabels(labelSet);
+        Set<Label> labelSet = labels.orElse(Collections.emptySet());
+        task.setLabels(new HashSet<>(labelSet));
+
 
         taskRepository.save(task);
         return taskMapper.map(task);
