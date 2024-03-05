@@ -78,7 +78,7 @@ public final class  TaskService {
         if (data.getTaskLabelIds() != null) {
             labels = labelRepository.findByIdIn((data.getTaskLabelIds()).get()).orElse(null);
         }
-        task.setLabels(labels != null ? new HashSet<>(labels) : new HashSet<>());
+        task.setLabels(labels);
 
         taskRepository.save(task);
         return taskMapper.map(task);
