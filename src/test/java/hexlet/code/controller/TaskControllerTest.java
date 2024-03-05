@@ -222,6 +222,7 @@ public final class TaskControllerTest {
         assertThat(updatedTask.getName()).isEqualTo(updateDTO.getTitle().get());
         assertThat(updatedTask.getDescription()).isEqualTo(updateDTO.getContent().get());
         assertThat(updatedTask.getTaskStatus().getSlug()).isEqualTo(testTask.getTaskStatus().getSlug());
+        assertThat(updatedTask.getLabels().containsAll(testTask.getLabels()));
     }
 
     @Test
