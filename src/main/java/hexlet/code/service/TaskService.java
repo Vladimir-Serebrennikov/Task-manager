@@ -74,9 +74,9 @@ public final class  TaskService {
         }
 
 
-        List<Label> labels = null;
+        Set<Label> labels = null;
         if (data.getTaskLabelIds() != null) {
-            labels = labelRepository.findAllById(data.getTaskLabelIds().get());
+            labels = labelRepository.findByIdIn((data.getTaskLabelIds()).get()).orElse(null);
         }
         task.setLabels(labels != null ? new HashSet<>(labels) : new HashSet<>());
 
