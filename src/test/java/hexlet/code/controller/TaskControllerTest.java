@@ -198,15 +198,15 @@ public final class TaskControllerTest {
         taskRepository.save(testTask);
 
         var statusCreateDTO = new TaskStatusCreateDTO();
-        statusCreateDTO.setName("To test");
-        statusCreateDTO.setSlug("to test");
+        statusCreateDTO.setName("Test");
+        statusCreateDTO.setSlug("Test");
         var status = taskStatusMapper.map(statusCreateDTO);
         taskStatusRepository.save(status);
 
         var updateDTO = new TaskUpdateDTO();
-        updateDTO.setTitle(JsonNullable.of(faker.lorem().word() + "aa"));
+        updateDTO.setTitle(JsonNullable.of(faker.lorem().word()));
         updateDTO.setContent(JsonNullable.of(faker.lorem().sentence()));
-        updateDTO.setStatus(JsonNullable.of("to test"));
+        updateDTO.setStatus(JsonNullable.of("Test"));
 
         var request = put("/api/tasks/{id}", testTask.getId()).with(token)
                 .contentType(MediaType.APPLICATION_JSON)

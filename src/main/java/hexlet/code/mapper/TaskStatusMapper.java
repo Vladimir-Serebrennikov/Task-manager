@@ -13,7 +13,7 @@ import hexlet.code.dto.TaskStatusDTO.TaskStatusUpdateDTO;
 
 
 @Mapper(
-        uses = { JsonNullableMapper.class, ReferenceMapper.class },
+        uses = { JsonNullableMapper.class },
         nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE,
         componentModel = MappingConstants.ComponentModel.SPRING,
         unmappedTargetPolicy = ReportingPolicy.IGNORE

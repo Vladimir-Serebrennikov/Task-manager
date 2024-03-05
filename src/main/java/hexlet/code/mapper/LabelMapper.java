@@ -11,7 +11,7 @@ import org.mapstruct.MappingConstants;
 import org.mapstruct.ReportingPolicy;
 
 @Mapper(
-        uses = { JsonNullableMapper.class, ReferenceMapper.class },
+        uses = { JsonNullableMapper.class },
         nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE,
         componentModel = MappingConstants.ComponentModel.SPRING,
         unmappedTargetPolicy = ReportingPolicy.IGNORE
