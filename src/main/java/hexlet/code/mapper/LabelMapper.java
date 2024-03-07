@@ -1,8 +1,8 @@
 package hexlet.code.mapper;
 
-import hexlet.code.dto.LabelDTO.LabelCreateDTO;
-import hexlet.code.dto.LabelDTO.LabelDTO;
-import hexlet.code.dto.LabelDTO.LabelUpdateDTO;
+import hexlet.code.dto.labelDTO.LabelCreateDTO;
+import hexlet.code.dto.labelDTO.LabelDTO;
+import hexlet.code.dto.labelDTO.LabelUpdateDTO;
 import hexlet.code.model.Label;
 import org.mapstruct.Mapper;
 import org.mapstruct.MappingTarget;

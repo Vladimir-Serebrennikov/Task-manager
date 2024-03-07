@@ -3,8 +3,8 @@ package hexlet.code.service;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import hexlet.code.dto.UserDTO.UserDTO;
-import hexlet.code.dto.UserDTO.UserCreateDTO;
+import hexlet.code.dto.userDTO.UserDTO;
+import hexlet.code.dto.userDTO.UserCreateDTO;
 import hexlet.code.mapper.UserMapper;
 import hexlet.code.repository.UserRepository;
 

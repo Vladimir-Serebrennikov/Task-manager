@@ -1,8 +1,8 @@
 package hexlet.code.controller;
 
-import hexlet.code.dto.UserDTO.UserCreateDTO;
-import hexlet.code.dto.UserDTO.UserDTO;
-import hexlet.code.dto.UserDTO.UserUpdateDTO;
+import hexlet.code.dto.userDTO.UserCreateDTO;
+import hexlet.code.dto.userDTO.UserDTO;
+import hexlet.code.dto.userDTO.UserUpdateDTO;
 import hexlet.code.exception.EntityAssociationException;
 import hexlet.code.exception.ResourceNotFoundException;
 import hexlet.code.repository.UserRepository;

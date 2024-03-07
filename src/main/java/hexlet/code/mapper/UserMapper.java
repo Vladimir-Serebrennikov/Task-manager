@@ -9,9 +9,9 @@ import org.mapstruct.Mapping;
 import org.mapstruct.BeforeMapping;
 
 import hexlet.code.model.User;
-import hexlet.code.dto.UserDTO.UserDTO;
-import hexlet.code.dto.UserDTO.UserCreateDTO;
-import hexlet.code.dto.UserDTO.UserUpdateDTO;
+import hexlet.code.dto.userDTO.UserDTO;
+import hexlet.code.dto.userDTO.UserCreateDTO;
+import hexlet.code.dto.userDTO.UserUpdateDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 

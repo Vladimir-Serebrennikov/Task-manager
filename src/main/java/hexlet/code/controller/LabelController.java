@@ -1,8 +1,8 @@
 package hexlet.code.controller;
 
-import hexlet.code.dto.LabelDTO.LabelCreateDTO;
-import hexlet.code.dto.LabelDTO.LabelDTO;
-import hexlet.code.dto.LabelDTO.LabelUpdateDTO;
+import hexlet.code.dto.labelDTO.LabelCreateDTO;
+import hexlet.code.dto.labelDTO.LabelDTO;
+import hexlet.code.dto.labelDTO.LabelUpdateDTO;
 import hexlet.code.exception.ResourceNotFoundException;
 import hexlet.code.exception.EntityAssociationException;
 import hexlet.code.mapper.LabelMapper;

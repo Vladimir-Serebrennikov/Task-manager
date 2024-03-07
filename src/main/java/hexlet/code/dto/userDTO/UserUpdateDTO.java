@@ -1,4 +1,4 @@
-package hexlet.code.dto.UserDTO;
+package hexlet.code.dto.userDTO;
 
 import jakarta.persistence.Column;
 import jakarta.validation.constraints.Email;

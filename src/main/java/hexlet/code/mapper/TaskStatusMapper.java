@@ -7,9 +7,9 @@ import org.mapstruct.ReportingPolicy;
 import org.mapstruct.MappingTarget;
 
 import hexlet.code.model.TaskStatus;
-import hexlet.code.dto.TaskStatusDTO.TaskStatusDTO;
-import hexlet.code.dto.TaskStatusDTO.TaskStatusCreateDTO;
-import hexlet.code.dto.TaskStatusDTO.TaskStatusUpdateDTO;
+import hexlet.code.dto.taskStatusDTO.TaskStatusDTO;
+import hexlet.code.dto.taskStatusDTO.TaskStatusCreateDTO;
+import hexlet.code.dto.taskStatusDTO.TaskStatusUpdateDTO;
 
 
 @Mapper(

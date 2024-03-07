@@ -1,7 +1,7 @@
 package hexlet.code.service;
 
-import hexlet.code.dto.LabelDTO.LabelCreateDTO;
-import hexlet.code.dto.LabelDTO.LabelDTO;
+import hexlet.code.dto.labelDTO.LabelCreateDTO;
+import hexlet.code.dto.labelDTO.LabelDTO;
 import hexlet.code.mapper.LabelMapper;
 import hexlet.code.repository.LabelRepository;
 import lombok.RequiredArgsConstructor;

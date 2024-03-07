@@ -1,8 +1,8 @@
 package hexlet.code.mapper;
 
-import hexlet.code.dto.TaskDTO.TaskCreateDTO;
-import hexlet.code.dto.TaskDTO.TaskDTO;
-import hexlet.code.dto.TaskDTO.TaskUpdateDTO;
+import hexlet.code.dto.taskDTO.TaskCreateDTO;
+import hexlet.code.dto.taskDTO.TaskDTO;
+import hexlet.code.dto.taskDTO.TaskUpdateDTO;
 import hexlet.code.model.Task;
 import hexlet.code.model.Label;
 import hexlet.code.repository.LabelRepository;
@@ -15,7 +15,6 @@ import org.mapstruct.ReportingPolicy;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.Set;
-import java.util.HashSet;
 import java.util.stream.Collectors;
 
 

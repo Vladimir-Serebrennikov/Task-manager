@@ -1,21 +1,22 @@
-package hexlet.code.dto.TaskStatusDTO;
+package hexlet.code.dto.taskStatusDTO;
 
 import jakarta.persistence.Column;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
 import lombok.Getter;
 import lombok.Setter;
+import org.openapitools.jackson.nullable.JsonNullable;
 
 @Getter
 @Setter
-public class TaskStatusCreateDTO {
+public class TaskStatusUpdateDTO {
     @Column(unique = true)
     @NotBlank
     @Size(min = 3)
-    private String name;
+    private JsonNullable<String> name;
 
     @Column(unique = true)
     @NotBlank
     @Size(min = 3)
-    private String slug;
+    private JsonNullable<String> slug;
 }

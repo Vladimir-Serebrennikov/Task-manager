@@ -6,10 +6,9 @@ import static org.springframework.security.test.web.servlet.request.SecurityMock
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-import hexlet.code.dto.TaskDTO.TaskCreateDTO;
-import hexlet.code.dto.TaskDTO.TaskUpdateDTO;
-import hexlet.code.dto.TaskStatusDTO.TaskStatusCreateDTO;
-import hexlet.code.dto.UserDTO.UserCreateDTO;
+import hexlet.code.dto.taskDTO.TaskCreateDTO;
+import hexlet.code.dto.taskDTO.TaskUpdateDTO;
+import hexlet.code.dto.taskStatusDTO.TaskStatusCreateDTO;
 import hexlet.code.mapper.TaskMapper;
 import hexlet.code.mapper.TaskStatusMapper;
 import hexlet.code.mapper.UserMapper;
